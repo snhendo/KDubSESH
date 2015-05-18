@@ -19,52 +19,66 @@ using namespace std;
 
 int main () {
     int shape = 0;
-    while (shape = 0) {
-        cout << "What shape?" << endl
-             << "0 = Triangle" << endl
-             << "1 = Quadrilateral" << endl
-             << "2 = Pentagon" << endl
-             << "3 = 
+    while (shape < 1 || shape > 5) {
+        
+        cout << endl << "Pick a shape:" << endl << endl
+             << "1 = Triangle" << endl
+             << "2 = Quadrilateral" << endl
+             << "3 = Pentagon" << endl
+             << "4 = Hexagon" << endl
+             << "5 = Octagon" << endl;
+        cin >> shape;
+        if (shape < 1 || shape > 5) {
+            cout << endl << "ERROR. Try again." << endl
+                 << "Please enter a number from 1 to 5." << endl;
+                continue;
+        }
+        else if (!cin) {
+            cout << endl << "ERROR. Try again." << endl
+                 << "Please enter a number from 1 to 5." << endl;
+                 break; // causes infinite loop if char/string is entered
+                        // how to repeat while loop after a break?
+        }
     }
 }
 
 class Polygon {
     virtual float area() = 0;
     virtual float perimeter() = 0;
-}
+};
 
 class Triangle : public Polygon {
-    virtual area
-}
+    //virtual area ()
+};
 
 class IsoscelesTriangle : public Triangle {
     
-}
+};
 
 class EquilateralTriangle : public Triangle {
     
-}
+};
 
 class Quadrilateral : public Polygon {
     
-}
+};
 
 class Rectangle : public Quadrilateral {
     
-}
+};
 
 class Square : public Quadrilateral {
     
-}
+};
 
 class Pentagon : public Polygon {
     
-}
+};
 
 class Hexagon : public Polygon {
     
-}
+};
 
 class Octagon : public Polygon {
     
-}
+};

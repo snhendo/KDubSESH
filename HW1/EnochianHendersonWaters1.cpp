@@ -14,6 +14,8 @@ Credit:
 
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include "Polygon.h"
 
 using namespace std;
 
@@ -62,152 +64,17 @@ int shapeType (int shape) {
     return type;
 }
 
-void getSides(int shape, int type) {
-    //get side lengths???????
-    switch (shape){
-        case 1: { //triangle
-            switch (type){
-                case 1: { //isosceles
-                    int eqside = 0, side = 0;
-                    cout << "Length of equivalent sides?" << endl;
-                    cin eqside;
-                    cout << "Length of other side?" << endl;
-                    cin side3; //.... how to return these to main???
-                }
-                case 2: {
-                    //equilateral
-                    cout << "Length of sides?" << endl;
-                    cin << sides;
-                }
-            }
-        }
-        case 2: {//quadrilateral
-            switch (type) {
-                case 1: {
-                    //rectangle
-                }
-                case 2: {
-                    //square
-                }
-            }
-        }
-        case 3: {
-            //pentagon
-        }
-        case 4: {
-            //hexagon
-        }
-        case 5: {
-            //octagon
-        }
+vector<int> Polygon::getSides(int numSides) {
+    int temp = 0;
+    for (int i = 0; i < numSides; i++) {
+        cout << "Side length " << i+1 << ": " << endl;
+        cin >> temp;
+        sides.push_back(temp);
     }
+    return sides;
 }
 
-class Polygon {
-    public:
-    virtual float area() = 0;
-    virtual float perimeter() = 0;
-};
 
-class Triangle : public Polygon {
-    public:
-    virtual float area() {
-        //something with trig
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        //sum of sides
-        return 0.0;
-    }
-};
-
-class IsoscelesTriangle : public Triangle {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class EquilateralTriangle : public Triangle {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class Quadrilateral : public Polygon {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class Rectangle : public Quadrilateral {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class Square : public Quadrilateral {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class Pentagon : public Polygon {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class Hexagon : public Polygon {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
-
-class Octagon : public Polygon {
-    public:
-    virtual float area() {
-        return 0.0;
-    }
-
-    virtual float perimeter() {
-        return 0.0;
-    }
-};
 
 int main () {
     int shape = 0;
@@ -234,32 +101,31 @@ int main () {
     }
 
     int type = 0;
+    int numSides = 1;
+    vector<int> sides;
     switch (shape) {
-        case 1: {
-            //triangle
+        case 1: {//triangle
             type = shapeType(shape);
-            getSides(shape, type);
+            if (type == 2) { numSides = 3; }
+            sides = a->getSides(numSides);
             break;
         }
-        case 2: {
-            // quadrilateral
+        case 2: {// quadrilateral
             type = shapeType(shape);
-            getSides(shape, type);
+            if (type == 1) { numSides = 2; }
+            sides = a->getSides(numSides);
             break;
         }
-        case 3: {
-            //pentagon
-            getSides(shape, type);
+        case 3: {//pentagon
+            sides = a->getSides(numSides);
             break;
         }
-        case 4: {
-            //hexagon
-            getSides(shape, type);
+        case 4: {//hexagon
+            sides = a->getSides(numSides);
             break;
         }
-        case 5: {
-            //octagon
-            getSides(shape, type);
+        case 5: {//octagon
+            sides = a->getSides(numSides);
             break;
         }
     }

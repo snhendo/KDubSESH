@@ -70,47 +70,100 @@ class Polygon {
 
 class Triangle : public Polygon {
     public:
-    virtual float area () {
+    virtual float area() {
         return 0.0;
+    }
+    
+    virtual float perimeter() {
+        return 0.0;   
     }
 };
 
 class IsoscelesTriangle : public Triangle {
     public:
-    virtual float area () {
+    virtual float area() {
         return 0.0;
+    }
+    
+    virtual float perimeter() {
+        return 0.0;   
     }
 };
 
 class EquilateralTriangle : public Triangle {
     public:
-    virtual float area () {
+    virtual float area() {
         return 0.0;
+    }
+    virtual float perimeter() {
+        return 0.0;   
     }
 };
 
 class Quadrilateral : public Polygon {
+    public:
+    virtual float area() {
+        return 0.0;
+    }
     
+    virtual float perimeter() {
+        return 0.0;   
+    }
 };
 
 class Rectangle : public Quadrilateral {
+    public:
+    virtual float area() {
+        return 0.0;
+    }
     
+    virtual float perimeter() {
+        return 0.0;   
+    }
 };
 
 class Square : public Quadrilateral {
+    public:
+    virtual float area() {
+        return 0.0;
+    }
     
+    virtual float perimeter() {
+        return 0.0;   
+    }
 };
 
 class Pentagon : public Polygon {
+    public:
+    virtual float area() {
+        return 0.0;
+    }
     
+    virtual float perimeter() {
+        return 0.0;   
+    }
 };
 
 class Hexagon : public Polygon {
+    public:
+    virtual float area() {
+        return 0.0;
+    }
     
+    virtual float perimeter() {
+        return 0.0;   
+    }
 };
 
 class Octagon : public Polygon {
+    public:
+    virtual float area() {
+        return 0.0;
+    }
     
+    virtual float perimeter() {
+        return 0.0;   
+    }
 };
 
 int main () {

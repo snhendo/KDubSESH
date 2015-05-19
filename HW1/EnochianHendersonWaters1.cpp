@@ -28,16 +28,16 @@ int main () {
              << "4 = Hexagon" << endl
              << "5 = Octagon" << endl;
         cin >> shape;
-        if (shape < 1 || shape > 5) {
+        if (!cin) {
+            cout << endl << "ERROR. Try again." << endl
+                 << "Please start program again and" << endl
+                 << "enter a number from 1 to 5." << endl;
+                 break;
+        }
+        else if (shape < 1 || shape > 5) {
             cout << endl << "ERROR. Try again." << endl
                  << "Please enter a number from 1 to 5." << endl;
                 continue;
-        }
-        else if (!cin) {
-            cout << endl << "ERROR. Try again." << endl
-                 << "Please enter a number from 1 to 5." << endl;
-                 break; // causes infinite loop if char/string is entered
-                        // how to repeat while loop after a break?
         }
     }
 }

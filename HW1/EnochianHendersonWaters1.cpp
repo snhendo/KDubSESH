@@ -1,6 +1,6 @@
 /*
 
-Author: Stephen Enochian, Shannon Henderson, Kaitlyn Waters
+Authors: Stephen Enochian, Shannon Henderson, Kaitlyn Waters
 Course Title: Data Structures
 Course Number: CS2028
 Instructor: Anca Ralescu
@@ -41,7 +41,7 @@ int shapeType (int shape) {
             break;
         }
         case 2: {
-            //rectangle or square 
+            //rectangle or square
             cout << "Rectangle or Square?" << endl
                  << "1 = Rectangle" << endl
                  << "2 = Square" << endl;
@@ -67,32 +67,38 @@ void getSides(int shape, int type) {
     switch (shape){
         case 1: { //triangle
             switch (type){
-                case 1: { 
-                    //isosceles
+                case 1: { //isosceles
+                    int eqside = 0, side = 0;
+                    cout << "Length of equivalent sides?" << endl;
+                    cin eqside;
+                    cout << "Length of other side?" << endl;
+                    cin side3; //.... how to return these to main???
                 }
-                case 2: { 
+                case 2: {
                     //equilateral
+                    cout << "Length of sides?" << endl;
+                    cin << sides;
                 }
             }
         }
         case 2: {//quadrilateral
             switch (type) {
                 case 1: {
-                    //rectangle   
+                    //rectangle
                 }
                 case 2: {
-                    //square   
+                    //square
                 }
             }
         }
         case 3: {
-            //pentagon   
+            //pentagon
         }
         case 4: {
-            //hexagon   
+            //hexagon
         }
         case 5: {
-            //octagon   
+            //octagon
         }
     }
 }
@@ -106,11 +112,13 @@ class Polygon {
 class Triangle : public Polygon {
     public:
     virtual float area() {
+        //something with trig
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        //sum of sides
+        return 0.0;
     }
 };
 
@@ -119,9 +127,9 @@ class IsoscelesTriangle : public Triangle {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -131,7 +139,7 @@ class EquilateralTriangle : public Triangle {
         return 0.0;
     }
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -140,9 +148,9 @@ class Quadrilateral : public Polygon {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -151,9 +159,9 @@ class Rectangle : public Quadrilateral {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -162,9 +170,9 @@ class Square : public Quadrilateral {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -173,9 +181,9 @@ class Pentagon : public Polygon {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -184,9 +192,9 @@ class Hexagon : public Polygon {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -195,9 +203,9 @@ class Octagon : public Polygon {
     virtual float area() {
         return 0.0;
     }
-    
+
     virtual float perimeter() {
-        return 0.0;   
+        return 0.0;
     }
 };
 
@@ -224,7 +232,7 @@ int main () {
                 continue;
         }
     }
-    
+
     int type = 0;
     switch (shape) {
         case 1: {
@@ -245,7 +253,7 @@ int main () {
             break;
         }
         case 4: {
-            //hexagon 
+            //hexagon
             getSides(shape, type);
             break;
         }
@@ -255,6 +263,6 @@ int main () {
             break;
         }
     }
-    
+
     return 0;
 }

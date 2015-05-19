@@ -62,6 +62,41 @@ int shapeType (int shape) {
     return type;
 }
 
+void getSides(int shape, int type) {
+    //get side lengths???????
+    switch (shape){
+        case 1: { //triangle
+            switch (type){
+                case 1: { 
+                    //isosceles
+                }
+                case 2: { 
+                    //equilateral
+                }
+            }
+        }
+        case 2: {//quadrilateral
+            switch (type) {
+                case 1: {
+                    //rectangle   
+                }
+                case 2: {
+                    //square   
+                }
+            }
+        }
+        case 3: {
+            //pentagon   
+        }
+        case 4: {
+            //hexagon   
+        }
+        case 5: {
+            //octagon   
+        }
+    }
+}
+
 class Polygon {
     public:
     virtual float area() = 0;
@@ -195,23 +230,28 @@ int main () {
         case 1: {
             //triangle
             type = shapeType(shape);
+            getSides(shape, type);
             break;
         }
         case 2: {
             // quadrilateral
             type = shapeType(shape);
+            getSides(shape, type);
             break;
         }
         case 3: {
             //pentagon
+            getSides(shape, type);
             break;
         }
         case 4: {
             //hexagon 
+            getSides(shape, type);
             break;
         }
         case 5: {
             //octagon
+            getSides(shape, type);
             break;
         }
     }

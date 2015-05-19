@@ -19,11 +19,11 @@ using namespace std;
 
 
 
-void shapeType (int shape) {
+int shapeType (int shape) {
+    int type = 0;
     switch (shape) {
         case 1: {
             //isosceles or equilateral
-            int type = 0;
             cout << "Equilateral or Isosceles?" << endl
                  << "1 = Equilateral" << endl
                  << "2 = Isosceles" << endl;
@@ -33,7 +33,7 @@ void shapeType (int shape) {
                  << "Please start program again and enter 1 or 2." << endl;
                  break;
             }
-            else if (type != 1 || type !=2) {
+            else if (type < 1 || type > 2) {
                 cout << endl << "ERROR. Try again." << endl
                      << "Please start program again and enter 1 or 2." << endl;
                     break;
@@ -42,7 +42,6 @@ void shapeType (int shape) {
         }
         case 2: {
             //rectangle or square 
-            int type = 0;
             cout << "Rectangle or Square?" << endl
                  << "1 = Rectangle" << endl
                  << "2 = Square" << endl;
@@ -52,7 +51,7 @@ void shapeType (int shape) {
                      << "Please start program again and enter 1 or 2." << endl;
                 break;
             }
-            else if (type != 1 || type !=2) {
+            else if (type < 1 || type > 2) {
                 cout << endl << "ERROR. Try again." << endl
                      << "Please start program again and enter 1 or 2." << endl;
                 break;
@@ -60,23 +59,34 @@ void shapeType (int shape) {
             break;
         }
     }
+    return type;
 }
 
 class Polygon {
+    public:
     virtual float area() = 0;
     virtual float perimeter() = 0;
 };
 
 class Triangle : public Polygon {
-    //virtual area ()
+    public:
+    virtual float area () {
+        return 0.0;
+    }
 };
 
 class IsoscelesTriangle : public Triangle {
-    
+    public:
+    virtual float area () {
+        return 0.0;
+    }
 };
 
 class EquilateralTriangle : public Triangle {
-    
+    public:
+    virtual float area () {
+        return 0.0;
+    }
 };
 
 class Quadrilateral : public Polygon {
@@ -127,15 +137,16 @@ int main () {
         }
     }
     
+    int type = 0;
     switch (shape) {
         case 1: {
             //triangle
-            shapeType(shape);
+            type = shapeType(shape);
             break;
         }
         case 2: {
             // quadrilateral
-            shapeType(shape);
+            type = shapeType(shape);
             break;
         }
         case 3: {

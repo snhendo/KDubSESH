@@ -30,15 +30,10 @@ int shapeType (int shape) {
                  << "1 = Equilateral" << endl
                  << "2 = Isosceles" << endl;
                 cin >> type;
-            if (!cin) {
+            if (!cin || type < 1 || type > 2) {
             cout << endl << "ERROR. Try again." << endl
                  << "Please start program again and enter 1 or 2." << endl;
                  break;
-            }
-            else if (type < 1 || type > 2) {
-                cout << endl << "ERROR. Try again." << endl
-                     << "Please start program again and enter 1 or 2." << endl;
-                    break;
             }
             break;
         }
@@ -48,12 +43,7 @@ int shapeType (int shape) {
                  << "1 = Rectangle" << endl
                  << "2 = Square" << endl;
                 cin >> type;
-            if (!cin) {
-                cout << endl << "ERROR. Try again." << endl
-                     << "Please start program again and enter 1 or 2." << endl;
-                break;
-            }
-            else if (type < 1 || type > 2) {
+            if (!cin || type < 1 || type > 2) {
                 cout << endl << "ERROR. Try again." << endl
                      << "Please start program again and enter 1 or 2." << endl;
                 break;
@@ -64,10 +54,13 @@ int shapeType (int shape) {
     return type;
 }
 
-vector<int> Polygon::getSides(int numSides) {
-    int temp = 0;
+
+
+vector<float> getSides(vector<float> sides, int numSides) {
+    float temp = 0.0;
     for (int i = 0; i < numSides; i++) {
-        cout << "Side length " << i+1 << ": " << endl;
+        cout << "Input Side Length: " << endl
+             << "(assuming equal side lengths for penta/hexa/octagons)" << endl;
         cin >> temp;
         sides.push_back(temp);
     }
@@ -86,49 +79,55 @@ int main () {
              << "4 = Hexagon" << endl
              << "5 = Octagon" << endl;
         cin >> shape;
-        if (!cin) {
+        if (!cin || shape < 1 || shape > 5) {
             cout << endl << "ERROR. Try again." << endl
                  << "Please start program again and" << endl
                  << "enter a number from 1 to 5." << endl;
                  break; //creates infinite loop if char/string is entered
                         //how to repeat while loop after break?
         }
-        else if (shape < 1 || shape > 5) {
-            cout << endl << "ERROR. Try again." << endl
-                 << "Please enter a number from 1 to 5." << endl;
-                continue;
-        }
     }
 
     int type = 0;
     int numSides = 1;
-    vector<int> sides;
+    vector<float> sides;
     switch (shape) {
         case 1: {//triangle
             type = shapeType(shape);
             if (type == 2) { numSides = 3; }
-            sides = a->getSides(numSides);
+            sides = getSides(sides, numSides);
+            if (type == 2) {
+                if (sides[0] != sides[1] && sides[1] != sides[2] && sides[0] != sides[2]){
+                    cout << "Two of the side lengths must be equal for an Isosceles" << endl
+                         << "triangle. Please restart the program and try again" << endl;
+                    break;
+                }
+                else{
+                    Polygon* t = new IsoscelesTriangle(sides);
+                    cout << "Area = " << t->area() << endl;
+                    cout << "Perimeter = " << t->perimeter() << endl;
+                }
+            }
             break;
         }
         case 2: {// quadrilateral
             type = shapeType(shape);
             if (type == 1) { numSides = 2; }
-            sides = a->getSides(numSides);
+            sides = getSides(sides, numSides);
             break;
         }
         case 3: {//pentagon
-            sides = a->getSides(numSides);
+            sides = getSides(sides, numSides);
             break;
         }
         case 4: {//hexagon
-            sides = a->getSides(numSides);
+            sides = getSides(sides, numSides);
             break;
         }
         case 5: {//octagon
-            sides = a->getSides(numSides);
+            sides = getSides(sides, numSides);
             break;
         }
     }
-
     return 0;
 }

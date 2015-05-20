@@ -5,10 +5,10 @@ Course Title: Data Structures
 Course Number: CS2028
 Instructor: Anca Ralescu
 TA: Suryadip Chakraborty
-Abstract:
-Preconditions:
-Postcondition:
-Credit:
+Abstract: This program uses the abstract interface Polygon and abstract functions area() and perimeter() to implement classes for a variety of polygons and to compute their respective areas and perimeters.
+Preconditions: None.
+Postcondition: None.
+Credit: N/A.
 
 */
 
@@ -135,7 +135,7 @@ int main () {
     cout << "Area = " << poly->area() << endl;
     cout << "Perimeter = " << poly->perimeter() << endl;
 
-    // = NULL;
+    //poly = NULL;
     //delete poly;
     return 0;
 }

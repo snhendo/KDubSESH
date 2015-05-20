@@ -118,20 +118,24 @@ int main () {
         }
         case 3: {//pentagon
             sides = getSides(sides, numSides);
+            poly = new Pentagon(sides);
             break;
         }
         case 4: {//hexagon
             sides = getSides(sides, numSides);
+            poly = new Hexagon(sides);
             break;
         }
         case 5: {//octagon
             sides = getSides(sides, numSides);
+            poly = new Octagon(sides);
             break;
         }
     }
     cout << "Area = " << poly->area() << endl;
     cout << "Perimeter = " << poly->perimeter() << endl;
 
+    // = NULL;
     //delete poly;
     return 0;
 }

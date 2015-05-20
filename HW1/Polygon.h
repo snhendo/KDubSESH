@@ -119,35 +119,58 @@ class Square : public Quadrilateral {
 
 class Pentagon : public Polygon {
     public:
+    Pentagon(vector<float> sides){
+        side1 = sides[0];
+    }
+
     virtual float area() {
-        return 0.0;
+        float result = (.25)*sqrt(5*(5+2*sqrt(5)))*pow(side1,2);
+        return result;
     }
 
     virtual float perimeter() {
-        return 0.0;
+        return 5*side1;
     }
+
+    private:
+    float side1;
 };
 
 class Hexagon : public Polygon {
     public:
+    Hexagon(vector<float> sides){
+        side1 = sides[0];
+    }
+
     virtual float area() {
-        return 0.0;
+        float result = (3*sqrt(3)*pow(side1,2))/2;
+        return result;
     }
 
     virtual float perimeter() {
-        return 0.0;
+        return 6*side1;
     }
+
+    private:
+    float side1;
 };
 
 class Octagon : public Polygon {
     public:
+    Octagon(vector<float> sides){
+        side1 = sides[0];
+    }
     virtual float area() {
-        return 0.0;
+        float result = 2*(1+sqrt(2))*pow(side1,2);
+        return result;
     }
 
     virtual float perimeter() {
-        return 0.0;
+        return 8*side1;
     }
+
+    private:
+    float side1;
 };
 
 

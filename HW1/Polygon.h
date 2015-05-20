@@ -58,45 +58,63 @@ class IsoscelesTriangle : public Triangle {
 
 class EquilateralTriangle : public Triangle {
     public:
+    EquilateralTriangle(vector<float> sides){
+        side1 = sides[0];
+    }
+
     virtual float area() {
-        return 0.0;
+        float result = (sqrt(3)/4)*pow(side1,2);
+        return result;
     }
     virtual float perimeter() {
-        return 0.0;
+        return 3*side1;
     }
+
+    private:
+    float side1;
 };
 
 class Quadrilateral : public Polygon {
     public:
-    virtual float area() {
-        return 0.0;
-    }
+    virtual float area() {return 0.0;}
 
-    virtual float perimeter() {
-        return 0.0;
-    }
+    virtual float perimeter() {return 0.0;}
 };
 
 class Rectangle : public Quadrilateral {
     public:
+    Rectangle(vector<float> sides){
+        side1 = sides[0];
+        side2 = sides[1];
+    }
     virtual float area() {
-        return 0.0;
+        return side1*side2;
     }
 
     virtual float perimeter() {
-        return 0.0;
+        return (2*side1)+(2*side2);
     }
+
+    private:
+    float side1, side2;
 };
 
 class Square : public Quadrilateral {
     public:
+    Square(vector<float> sides){
+        side1 = sides[0];
+    }
+
     virtual float area() {
-        return 0.0;
+        return pow(side1,2);
     }
 
     virtual float perimeter() {
-        return 0.0;
+        return 4*side1;
     }
+
+    private:
+    float side1;
 };
 
 class Pentagon : public Polygon {

@@ -91,10 +91,11 @@ int main () {
     int type = 0;
     int numSides = 1;
     vector<float> sides;
+    Polygon* poly;
     switch (shape) {
         case 1: {//triangle
             type = shapeType(shape);
-            if (type == 2) { numSides = 3; }
+            if (type == 2) {numSides = 3;}
             sides = getSides(sides, numSides);
             if (type == 2) {
                 if (sides[0] != sides[1] && sides[1] != sides[2] && sides[0] != sides[2]){
@@ -102,18 +103,17 @@ int main () {
                          << "triangle. Please restart the program and try again" << endl;
                     break;
                 }
-                else{
-                    Polygon* t = new IsoscelesTriangle(sides);
-                    cout << "Area = " << t->area() << endl;
-                    cout << "Perimeter = " << t->perimeter() << endl;
-                }
+                else{poly = new IsoscelesTriangle(sides);}
             }
+            else{poly = new EquilateralTriangle(sides);}
             break;
         }
         case 2: {// quadrilateral
             type = shapeType(shape);
-            if (type == 1) { numSides = 2; }
+            if (type == 1) {numSides = 2;}
             sides = getSides(sides, numSides);
+            if (type == 1) {poly = new Rectangle(sides);}
+            else{poly = new Square(sides);}
             break;
         }
         case 3: {//pentagon
@@ -129,5 +129,9 @@ int main () {
             break;
         }
     }
+    cout << "Area = " << poly->area() << endl;
+    cout << "Perimeter = " << poly->perimeter() << endl;
+
+    //delete poly;
     return 0;
 }

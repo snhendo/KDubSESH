@@ -9,31 +9,31 @@ using namespace std;
 
 class Polygon {
     public:
-    virtual float area() = 0;
-    virtual float perimeter() = 0;
+    virtual float area() = 0; // initialize area function
+    virtual float perimeter() = 0; // initialize perimeter function
 };
 
-class Triangle : public Polygon {
+class Triangle : public Polygon { // Triangle inherits from Polygon
     public:
-    virtual float area() {return 0.0;}
-    virtual float perimeter() {return 0.0;}
+    virtual float area() {return 0.0;} // initializes Triangle area (dependent on type of triangle)
+    virtual float perimeter() {return 0.0;} // initializes Triangle perimeter (dependent on type of triangle)
 };
 
-class IsoscelesTriangle : public Triangle {
+class IsoscelesTriangle : public Triangle { // IsoscelesTriangle inherits from Triangle
     public:
 
-    IsoscelesTriangle(vector<float> sides) { //constructor
-        side1 = sides[0];
+    IsoscelesTriangle(vector<float> sides) { //constructor, initializes vector
+        side1 = sides[0]; // assigns each element in the vector to a variable that can be used within this function
         side2 = sides[1];
         side3 = sides[2];
     }
 
     virtual float area() {
-        float base = 0;
-        float s = 0;
-        if (side1 == side2){
-            base = side3;
-            s = side2;
+        float base = 0; // initialize base
+        float s = 0; // initialize s
+        if (side1 == side2){ // legs
+            base = side3; // assign base to the other side
+            s = side2; // s = side 2 because it is equal to side 1
         }
         else if (side2 == side3) {
             base = side1;

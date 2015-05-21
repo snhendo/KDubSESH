@@ -100,7 +100,12 @@ int main () {
                 if (sides[0] != sides[1] && sides[1] != sides[2] && sides[0] != sides[2]){ // checks to make sure at least 2 sides are equal
                     cout << "Two of the side lengths must be equal for an Isosceles" << endl
                          << "triangle. Please restart the program and try again" << endl;
-                    break;
+                    return 0;
+                }
+                else if (!(sides[0] < (sides[1]+sides[2])) || !(sides[1] < (sides[0]+sides[2]))
+                         || !(sides[2] < (sides[0]+sides[1]))) { //checks to make sure side lengths are valid
+                    cout << "Invalid side lenghths. Please restart the program and try again." << endl;
+                    return 0;
                 }
                 else{poly = new IsoscelesTriangle(sides);} // calls IsoscelesTriangle function
             }
@@ -134,7 +139,5 @@ int main () {
     cout << "Area = " << poly->area() << endl; // calculates the area of the polygon using the appropriate Area function (calculations)
     cout << "Perimeter = " << poly->perimeter() << endl; // calculates the perimeter of the polygon using the appropriate Perimeter function (calculations)
 
-    //poly = NULL;
-    //delete poly;
     return 0; // end of main function
 }

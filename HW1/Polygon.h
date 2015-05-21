@@ -32,27 +32,27 @@ class IsoscelesTriangle : public Triangle { // IsoscelesTriangle inherits from T
         float base = 0; // initialize base
         float s = 0; // initialize s
         if (side1 == side2){ // legs
-            base = side3; // assign base to the other side
+            base = side3; // if the 2 legs are equal, the last side avaialable will be the base
             s = side2; // s = side 2 because it is equal to side 1
         }
-        else if (side2 == side3) {
-            base = side1;
-            s = side3;
+        else if (side2 == side3) { // legs
+            base = side1; // if the 2 legs are equal, the last side available will be the base
+            s = side3; // s = side 3 because it is equal to side 2
         }
         else {
-            base = side2;
-            s = side1;
+            base = side2; // (assuming that sides 1 and 3 are the equal sides)
+            s = side1; // s = side 1 because it is equal to side 3
         }
-        float result = (.5)*pow(base,2)*sqrt((pow(s,2)/pow(base,2))-(.25));
-        return result;
+        float result = (.5)*pow(base,2)*sqrt((pow(s,2)/pow(base,2))-(.25)); // calculate area
+        return result; // return the area
     }
 
     virtual float perimeter() {
-        return side1 + side2 + side3;
+        return side1 + side2 + side3; // calculate perimeter and return the result
     }
 
     private:
-    float side1, side2, side3;
+    float side1, side2, side3; // initialize sides 1-3
 
 };
 

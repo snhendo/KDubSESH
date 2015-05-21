@@ -22,7 +22,7 @@ class Triangle : public Polygon { // Triangle inherits from Polygon
 class IsoscelesTriangle : public Triangle { // IsoscelesTriangle inherits from Triangle
     public:
 
-    IsoscelesTriangle(vector<float> sides) { //constructor, initializes vector
+    IsoscelesTriangle(vector<float> sides) { //constructor
         side1 = sides[0]; // assigns each element in the vector to a variable that can be used within this function
         side2 = sides[1];
         side3 = sides[2];
@@ -43,7 +43,7 @@ class IsoscelesTriangle : public Triangle { // IsoscelesTriangle inherits from T
             base = side2; // (assuming that sides 1 and 3 are the equal sides)
             s = side1; // s = side 1 because it is equal to side 3
         }
-        float result = (.5)*pow(base,2)*sqrt((pow(s,2)/pow(base,2))-(.25)); // calculate area
+        float result = (.5)*pow(base,2)*sqrt((pow(s,2)/pow(base,2))-(.25)); // calculate area using base and sides (rather than using 1/2xbasexheight
         return result; // return the area
     }
 
@@ -56,121 +56,121 @@ class IsoscelesTriangle : public Triangle { // IsoscelesTriangle inherits from T
 
 };
 
-class EquilateralTriangle : public Triangle {
+class EquilateralTriangle : public Triangle { // EquilateralTriangle inherits from Triangle
     public:
-    EquilateralTriangle(vector<float> sides){
-        side1 = sides[0];
+    EquilateralTriangle(vector<float> sides){ // constructor
+        side1 = sides[0]; // initialize side 1 to the first entry of side (because it's an equilateral triangle)
     }
 
     virtual float area() {
-        float result = (sqrt(3)/4)*pow(side1,2);
-        return result;
+        float result = (sqrt(3)/4)*pow(side1,2); // calculate area
+        return result; // return the area
     }
     virtual float perimeter() {
-        return 3*side1;
+        return 3*side1; // return the calculated result for the perimeter of the triangle
     }
 
     private:
-    float side1;
+    float side1; // initialize side 1
 };
 
-class Quadrilateral : public Polygon {
+class Quadrilateral : public Polygon { // Quadrilateral inherits from Polygon
     public:
-    virtual float area() {return 0.0;}
+    virtual float area() {return 0.0;} // initialize area function
 
-    virtual float perimeter() {return 0.0;}
+    virtual float perimeter() {return 0.0;} // initialize perimeter function
 };
 
-class Rectangle : public Quadrilateral {
+class Rectangle : public Quadrilateral { // Rectangle inherits from Quadrilateral
     public:
-    Rectangle(vector<float> sides){
+    Rectangle(vector<float> sides){ // constructor
         side1 = sides[0];
         side2 = sides[1];
     }
     virtual float area() {
-        return side1*side2;
+        return side1*side2; // return the calculated area
     }
 
     virtual float perimeter() {
-        return (2*side1)+(2*side2);
+        return (2*side1)+(2*side2); // return the calculated perimeter
     }
 
     private:
-    float side1, side2;
+    float side1, side2; // initialize private variables (sides)
 };
 
-class Square : public Quadrilateral {
+class Square : public Quadrilateral { // Square inherits from Quadrilateral
     public:
-    Square(vector<float> sides){
+    Square(vector<float> sides){ // constructor
         side1 = sides[0];
     }
 
     virtual float area() {
-        return pow(side1,2);
+        return pow(side1,2); // return the calculated area
     }
 
     virtual float perimeter() {
-        return 4*side1;
+        return 4*side1; // return the calculated perimeter
     }
 
     private:
-    float side1;
+    float side1; // initialize private variable (side)
 };
 
-class Pentagon : public Polygon {
+class Pentagon : public Polygon { // Pentagon inherits from Polygon
     public:
-    Pentagon(vector<float> sides){
+    Pentagon(vector<float> sides){ // constructor
         side1 = sides[0];
     }
 
     virtual float area() {
-        float result = (.25)*sqrt(5*(5+2*sqrt(5)))*pow(side1,2);
-        return result;
+        float result = (.25)*sqrt(5*(5+2*sqrt(5)))*pow(side1,2); // calculate area
+        return result; // return area
     }
 
     virtual float perimeter() {
-        return 5*side1;
+        return 5*side1; // return the calculated perimeter
     }
 
     private:
-    float side1;
+    float side1; // initialize private variable (side)
 };
 
-class Hexagon : public Polygon {
+class Hexagon : public Polygon { // Hexagon inherits from Polygon
     public:
-    Hexagon(vector<float> sides){
+    Hexagon(vector<float> sides){ // constructor
         side1 = sides[0];
     }
 
     virtual float area() {
-        float result = (3*sqrt(3)*pow(side1,2))/2;
-        return result;
+        float result = (3*sqrt(3)*pow(side1,2))/2; // calculate area
+        return result; // return area
     }
 
     virtual float perimeter() {
-        return 6*side1;
+        return 6*side1; // return the calculated perimeter
     }
 
     private:
-    float side1;
+    float side1; // initialize private variable (side)
 };
 
-class Octagon : public Polygon {
+class Octagon : public Polygon { // Octagon inherits from Polygon
     public:
-    Octagon(vector<float> sides){
+    Octagon(vector<float> sides){ // constructor
         side1 = sides[0];
     }
     virtual float area() {
-        float result = 2*(1+sqrt(2))*pow(side1,2);
-        return result;
+        float result = 2*(1+sqrt(2))*pow(side1,2); // calculate area
+        return result; // return area
     }
 
     virtual float perimeter() {
-        return 8*side1;
+        return 8*side1; // return the calculated perimeter
     }
 
     private:
-    float side1;
+    float side1; // initialize private variable (side)
 };
 
 

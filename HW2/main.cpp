@@ -1,4 +1,5 @@
-/* 20CS2028Assignment2-2015
+/*
+20CS2028Assignment2-2015
 Authors: Stephen Enochian, Shannon Henderson, Kaitlyn Waters
 Course: Data Structures
 Course Number: CS2028

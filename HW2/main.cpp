@@ -65,6 +65,7 @@ false if the array contains repeated elements*/
 
 
 // bubble sort from talaga's examples
+//i think we're supposed to use arrays not vectors?
 void bubbleSort(vector<int> &v){
   for(unsigned int runs = 0; runs < v.size(); runs++){
     bool swapped = false;

@@ -18,39 +18,46 @@ Postconditions: N/A
 #include<iostream>
 #include<cmath>
 #include<ctime>
+#include<vector>
 
 using namespace std;
 
 int main(){
 
-bool Algorithm isUnique1(A, first, last){
+bool isUnique1(vector A, int first, int last){ //Recursive validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
-   if (first >= last)
-return true;
+    if (first >= last) {return true};
+    if (A[first] == A[last]) {return false};
     if (!isUnique1(A, first, last-1) {return false};
     if (!isUnique1(A, first+1, last) {return false};
     return(A[first]!=A[last])
 }
 
 
-bool Algorithm isUnique2(A, first, last){
+bool isUnique2(A, first, last){ //Iterative validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
-    if (first >= last) {return true;}
+    for (int i = 0; i < A.size()-1; i++) {
+        for (int j = i + 1; j < A.size(); j++) {
+            if (A[i] == A[j]){return false};
+        }
+    }
+return true;
+/*    if (first >= last) {return true;}
     for (int i =  first; i < last; i++) {
         for (int j = i+1; j <=last; j++) {
             if (A[i] == A[j]) {return false};
         }
     }
-   return true;
+   return true;*/
 }
 
-bool Algorithm isUnique3(A, first, last){
+bool isUnique3(A, first, last){ //Sorted validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements

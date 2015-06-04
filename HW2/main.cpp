@@ -8,7 +8,7 @@ TA: Suryadip Chakraborty
 Abstract: Assignment 2 main.cpp uses three algorithms:
           Algorithm isUnique1(A, first, last)
           Algorithm isUnique2 (A, first, last)
-          Algorithm isUnique3 (A, first last),
+          Algorithm isUnique3 (A, first, last),
           to ensure that an array does not have any repeated elements as well as
           check that two arrays of the same size and type represent the same set.
 Preconditions: N/A

@@ -30,7 +30,6 @@ bool isUnique1(vector A, int first, int last){ //Recursive validation
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
     if (first >= last) {return true};
-    if (A[first] == A[last]) {return false};
     if (!isUnique1(A, first, last-1) {return false};
     if (!isUnique1(A, first+1, last) {return false};
     return(A[first]!=A[last])
@@ -42,19 +41,13 @@ bool isUnique2(A, first, last){ //Iterative validation
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
-    for (int i = 0; i < A.size()-1; i++) {
-        for (int j = i + 1; j < A.size(); j++) {
-            if (A[i] == A[j]){return false};
-        }
-    }
-return true;
-/*    if (first >= last) {return true;}
+    if (first >= last) {return true;}
     for (int i =  first; i < last; i++) {
         for (int j = i+1; j <=last; j++) {
             if (A[i] == A[j]) {return false};
         }
     }
-   return true;*/
+   return true;
 }
 
 bool isUnique3(A, first, last){ //Sorted validation

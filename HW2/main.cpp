@@ -58,12 +58,11 @@ false if the array contains repeated elements*/
     if (sortType == 0) {
         A = bubbleSort(A);
     } else if (sortType == 1) {
-        //sortType1
+        A = quickSort(A);
     } else {
-        //sortType2
+        A = selectionSort(A);
     }
     if (first >= last) {return true;}
-   SORT(A, first, last); // lol wut
     for (int i =  first; i < last; i++) {
         if (A[i] == A[i+1]) {return false};
     }
@@ -90,6 +89,48 @@ vector bubbleSort(vector<int> &v){
     }
   }
 }
+
+        time_t start = time;
+        time_t end = time;
+        bool result = true;
+
+        vector<int> numbers;
+
+        start = time;
+        result = isUnique1(numbers, 0, numbers.size());
+        end = time;
+        cout << "Recursive Validation :: ";
+        if (result == false) {
+             cout << "NOT ";
+        }
+        cout << "Unique! Time: " << ctime(difftime(end,start)) << endl;
+
+        start = time;
+        result = isUnique2(numbers, 0, numbers.size());
+        end = time;
+        cout << "Iterative Validation :: ";
+        if (result == false) {
+             cout << "NOT ";
+        }
+        cout << "Unique! Time: " << ctime(difftime(end,start)) << endl;
+
+        for (int sortType = 0; sortType <= 2; sortType++) {
+            start = time;
+            result = isUnique3(numbers, 0, numbers.size(), sortType);
+            end = time;
+            if (sortType == 0) {
+                cout << "BubbleSort ";
+            } else if (sortType == 1) {
+                cout << "QuickSort ";
+            } else {
+                cout << "SelectionSort ";
+            }
+            cout << "Sorted Validation :: ";
+            if (result == false) {
+                 cout << "NOT ";
+            }
+            cout << "Unique! Time: " << ctime(difftime(end,start)) << endl;
+        }
 
 return 0;
 

@@ -24,7 +24,7 @@ using namespace std;
 
 int main(){
 
-bool isUnique1(vector A, int first, int last){ //Recursive validation
+bool isUnique1(vector<int> A, int first, int last){ //Recursive validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements
@@ -36,7 +36,7 @@ false if the array contains repeated elements*/
 }
 
 
-bool isUnique2(A, first, last){ //Iterative validation
+bool isUnique2(vector<int> A, first, last){ //Iterative validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements
@@ -50,7 +50,7 @@ false if the array contains repeated elements*/
    return true;
 }
 
-bool isUnique3(A, first, last){ //Sorted validation
+bool isUnique3(vector<int> A, first, last){ //Sorted validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements

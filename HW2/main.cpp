@@ -36,7 +36,7 @@ false if the array contains repeated elements*/
 }
 
 
-bool isUnique2(vector<int> A, first, last){ //Iterative validation
+bool isUnique2(vector<int> A, int first, int last){ //Iterative validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements
@@ -50,11 +50,18 @@ false if the array contains repeated elements*/
    return true;
 }
 
-bool isUnique3(vector<int> A, first, last){ //Sorted validation
+bool isUnique3(vector<int> A, int first, int last, int sortType){ //Sorted validation
    /*Input: Array A, first, last
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
+    if (sortType == 0) {
+        A = bubbleSort(A);
+    } else if (sortType == 1) {
+        //sortType1
+    } else {
+        //sortType2
+    }
     if (first >= last) {return true;}
    SORT(A, first, last); // lol wut
     for (int i =  first; i < last; i++) {
@@ -66,7 +73,7 @@ false if the array contains repeated elements*/
 
 // bubble sort from talaga's examples
 //i think we're supposed to use arrays not vectors?
-void bubbleSort(vector<int> &v){
+vector bubbleSort(vector<int> &v){
   for(unsigned int runs = 0; runs < v.size(); runs++){
     bool swapped = false;
     for(unsigned int i = 0; i < v.size()-1; i++){

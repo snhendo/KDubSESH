@@ -183,15 +183,6 @@ int main(){
 	srand(time(0)); // randomizes the rand
 	fill(numbers, size); // calls fill function to fill vector with random elements (vector will be the size that the user determined earlier)
 	print(numbers); // prints the vector (unsorted)
-	start = clock(); //starts timer
-	result = isUnique1(numbers, 0, numbers.size()); // calls the isUnique1 function (recursive check) with first = 0 and last = numbers.size()
-	end = clock(); // ends timer
-	//print(numbers); // prints vector
-	cout << "Recursive Validation :: "; // prints a statement to the user saying whether the vector is unique or not unique
-	if (result == false) {
-		 cout << "NOT ";
-	}
-	cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl; // prints out the time it took to determine uniqueness of the vector
 
 	start = clock(); // start timer
 	result = isUnique2(numbers, 0, numbers.size()); // calls the isUnique2 function (iterative check) with first = 0 and last = numbers.size()
@@ -219,6 +210,17 @@ int main(){
 		}
 		cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl; // prints out the time it took to determine uniqueness of the vector
 	}
+
+	start = clock(); //starts timer
+	result = isUnique1(numbers, 0, numbers.size()); // calls the isUnique1 function (recursive check) with first = 0 and last = numbers.size()
+	end = clock(); // ends timer
+	//print(numbers); // prints vector
+	cout << "Recursive Validation :: "; // prints a statement to the user saying whether the vector is unique or not unique
+	if (result == false) {
+		 cout << "NOT ";
+	}
+	cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl; // prints out the time it took to determine uniqueness of the vector
+
 
 return 0;
 

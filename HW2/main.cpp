@@ -58,6 +58,7 @@ void bubbleSort(vector<int> &numbers){
 }
 
 //talaga
+/*
 void quickSort(vector<int> &v, int start, int end){
   // sort the elements between (and including) start and end
   if(end-start < 1){ // 0
@@ -88,6 +89,49 @@ void quickSort(vector<int> &v, int start, int end){
   quickSort(v,so, start-1);
   quickSort(v,end+1,se);
 }
+*/
+
+
+vector<int> merge(vector<int> &left, vector<int> &right){
+	vector<int> result;
+	unsigned i = 0;
+	unsigned j = 0;
+	while(i < left.size() || j < right.size()){
+	  if( i == left.size()){
+		result.push_back(right[j]);
+		j++;
+	  }else if( j == right.size()){
+		result.push_back(left[i]);
+		i++;
+	  }else if(left[i] < right[j]){
+		result.push_back(left[i]);
+		i++;
+	  }else{
+		result.push_back(right[j]);
+		j++;
+	  }
+	}
+	return result;
+  }
+
+  void mergeSort(vector<int> &v){
+	if(v.size() <= 1){
+	  return;
+	}
+	unsigned split = v.size() / 2;
+	vector<int> left;
+	vector<int> right;
+	for(unsigned i = 0; i < v.size(); i++){
+	  if( i < split){
+		left.push_back(v[i]);
+	  }else{
+		right.push_back(v[i]);
+	  }
+	}
+	mergeSort(left);
+	mergeSort(right);
+	v = merge(left,right);
+  }
 
 
 void selectionSort(vector<int> &numbers) {
@@ -146,7 +190,7 @@ false if the array contains repeated elements*/
 	}
 	else if (sortType == 1) {
 		print(numbers);
-		quickSort(numbers, first, last);
+		mergeSort(numbers);
 		print(numbers);
 	} else {
 		print(numbers);
@@ -199,7 +243,7 @@ int main(){
 		if (sortType == 0) {
 			cout << "BubbleSort ";
 		} else if (sortType == 1) {
-			cout << "QuickSort ";
+			cout << "MergeSort ";
 		} else {
 			cout << "SelectionSort ";
 		}

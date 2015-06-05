@@ -32,26 +32,32 @@ void fill(vector<int> &numbers, int count){
   }
 }
 
+void print(vector<int> &numbers){
+	cout << "vector = [";
+	for(int i = 0; i < numbers.size()-1; i++){
+		cout << numbers[i] << ",";
+	}
+	cout << "]" << endl;
+}
+
 // bubble sort from talaga's examples
 void bubbleSort(vector<int> &numbers){
-  for(unsigned int runs = 0; runs < numbers.size(); runs++){
-	bool swapped = false;
-	for(unsigned int i = 0; i < numbers.size()-1; i++){
-	  if(numbers[i] > numbers[i+1]){  //swap
-		int temp = numbers[i];
-		numbers[i] = numbers[i+1];
-		numbers[i+1] = temp;
-		swapped = true;
-	  }
+	for(unsigned int i = 0; i < numbers.size(); i++){
+		bool swapped = false;
+		for(unsigned int j = 0; j < numbers.size()-1; j++){
+			if(numbers[j] > numbers[j+1]){  //swap
+				int temp = numbers[j];
+				numbers[j] = numbers[j+1];
+				numbers[j+1] = temp;
+				swapped = true;
+		  }
+		}
+		if(!swapped){return;}
 	}
-	if(!swapped){
-	  //cout << "Out for good behavior\n";
-	  return;
-	}
-  }
 }
 
 //talaga
+/*
 void quickSort(vector<int> &numbers, int first, int last){
 	// sort the elements between (and including) start and end
 	if(last-first < 1){ // 0
@@ -81,6 +87,38 @@ void quickSort(vector<int> &numbers, int first, int last){
 	}
 	quickSort(numbers,so, first-1);
 	quickSort(numbers,last+1,se);
+}*/
+
+void quickSort(vector<int> &v, int start, int end){
+  // sort the elements between (and including) start and end
+  if(end-start < 1){ // 0
+	return;
+  }
+  int so = start;
+  int se = end;
+  // put pivot at start location
+  int pivot = start;
+  int pv = v[pivot];
+  while(end-start >= 1){
+	// 4 cases
+	if(v[start] == pv && v[end] == pv){
+	  start++;
+	}else if(v[start] >= pv && v[end] <= pv){ // switch
+	  int temp = v[start];
+	  v[start] = v[end];
+	  v[end] = temp;
+	  // don't change start or end
+	}else if(v[end] > pv){
+	  end--;
+	}else if(v[start] < pv){ // low OK
+	  start++;
+	}else{
+	  cout << "Well crap\n";
+	  return;
+	}
+  }
+  quickSort(v,so, start-1);
+  quickSort(v,end+1,se);
 }
 
 
@@ -88,7 +126,7 @@ void selectionSort(vector<int> &numbers) {
 	int min, temp;
 	for (int i = 0; i < numbers.size() -1; i++) {
 		min = i;
-		for (int j = i + 1; j < n; j++)
+		for (int j = i + 1; j < numbers.size(); j++)
 			if (numbers[j] < numbers[min])
 				min = j;
 			if (min != i) {
@@ -105,10 +143,10 @@ bool isUnique1(vector<int> &numbers, int first, int last){ //Recursive validatio
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
-	if (first >= last) {return true};
-	if (!isUnique1(numbers, first, last-1) {return false};
-	if (!isUnique1(numbers, first+1, last) {return false};
-	return(numbers[first]!=numbers[last])
+	if (first >= last) {return true;}
+	if (!isUnique1(numbers, first, last-1)) {return false;}
+	if (!isUnique1(numbers, first+1, last)) {return false;}
+	return (numbers[first]!=numbers[last]);
 }
 
 
@@ -117,12 +155,14 @@ bool isUnique2(vector<int> &numbers, int first, int last){ //Iterative validatio
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
+	print(numbers);
 	if (first >= last) {return true;}
-	for (int i =  first; i < last; i++) {
+	for (int i = first; i < last; i++) {
 		for (int j = i+1; j <=last; j++) {
-			if (numbers[i] == numbers[j]) {return false};
+			if (numbers[i] == numbers[j]) {return false;}
 		}
 	}
+	print(numbers);
    return true;
 }
 
@@ -132,53 +172,64 @@ bool isUnique3(vector<int> numbers, int first, int last, int sortType){ //Sorted
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
 	if (sortType == 0) {
+		print(numbers);
 		bubbleSort(numbers);
+		print(numbers);
 	}
 	else if (sortType == 1) {
+		print(numbers);
 		quickSort(numbers, first, last);
+		print(numbers);
 	} else {
+		print(numbers);
 		selectionSort(numbers);
+		print(numbers);
 	} if (first >= last) {return true;}
 	for (int i =  first; i < last; i++) {
-		if (numbers[i] == numbers[i+1]) {return false};
+		if (numbers[i] == numbers[i+1]) {return false;}
 	}
    return true;
 }
 
 
 int main(){
-	time_t start = time;
-	time_t end = time;
+	clock_t start = clock();
+	clock_t end = clock();
 	bool result = true;
+	int size = 0;
+
+	cout << "Enter the number of elements for the vector: " << endl;
+	cin >> size;
 
 	vector<int> numbers;
-	fill(number, size);
-
-	start = time;
+	srand(time(0));
+	fill(numbers, size);
+	print(numbers);
+	start = clock();
 	result = isUnique1(numbers, 0, numbers.size());
-	end = time;
+	end = clock();
+	print(numbers);
 	cout << "Recursive Validation :: ";
 	if (result == false) {
 		 cout << "NOT ";
 	}
-	cout << "Unique! Time: " << ctime(difftime(end,start)) << endl;
+	cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl;
 
-	start = time;
+	start = clock();
 	result = isUnique2(numbers, 0, numbers.size());
-	end = time;
+	end = clock();
 	cout << "Iterative Validation :: ";
 	if (result == false) {
 		 cout << "NOT ";
 	}
-	cout << "Unique! Time: " << ctime(difftime(end,start)) << endl;
+	cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl;
 
 	for (int sortType = 0; sortType <= 2; sortType++) {
-		start = time;
+		start = clock();
 		result = isUnique3(numbers, 0, numbers.size(), sortType);
-		end = time;
+		end = clock();
 		if (sortType == 0) {
 			cout << "BubbleSort ";
-
 		} else if (sortType == 1) {
 			cout << "QuickSort ";
 		} else {
@@ -188,7 +239,7 @@ int main(){
 		if (result == false) {
 			 cout << "NOT ";
 		}
-		cout << "Unique! Time: " << ctime(difftime(end,start)) << endl;
+		cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl;
 	}
 
 return 0;

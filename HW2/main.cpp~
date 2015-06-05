@@ -35,7 +35,7 @@ void fill(vector<int> &numbers, int count){
 
 void print(vector<int> &numbers){
 	cout << "vector = [";
-	for(int i = 0; i < numbers.size(); i++){
+	for(int i = 0; i < numbers.size()-1; i++){
 		cout << numbers[i] << ",";
 	}
 	cout << "]" << endl;

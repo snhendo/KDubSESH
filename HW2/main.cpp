@@ -84,6 +84,22 @@ void quickSort(vector<int> &numbers, int first, int last){
 }
 
 
+void selectionSort(vector<int> &numbers) {
+	int min, temp;
+	for (int i = 0; i < numbers.size() -1; i++) {
+		min = i;
+		for (int j = i + 1; j < n; j++)
+			if (numbers[j] < numbers[min])
+				min = j;
+			if (min != i) {
+				temp = numbers[i];
+				numbers[i] = numbers[min];
+				numbers[min] = temp;
+		}
+	}
+}
+
+
 bool isUnique1(vector<int> &numbers, int first, int last){ //Recursive validation
    /*Input: Array A, first, last
    Output:
@@ -119,7 +135,7 @@ false if the array contains repeated elements*/
 		bubbleSort(numbers);
 	}
 	else if (sortType == 1) {
-		quickSort(numbers);
+		quickSort(numbers, first, last);
 	} else {
 		selectionSort(numbers);
 	} if (first >= last) {return true;}

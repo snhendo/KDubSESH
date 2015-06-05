@@ -57,38 +57,6 @@ void bubbleSort(vector<int> &numbers){
 }
 
 //talaga
-/*
-void quickSort(vector<int> &numbers, int first, int last){
-	// sort the elements between (and including) start and end
-	if(last-first < 1){ // 0
-		return;
-	}
-	int so = first;
-	int se = last;
-	// put pivot at start location
-	int pivot = first;
-	int pv = numbers[pivot];
-	while(last-first >= 1){
-		if(numbers[first] == pv && numbers[last] == pv){
-		  first++;
-		}else if(numbers[first] >= pv && numbers[last] <= pv){ // switch
-		  int temp = numbers[first];
-		  numbers[first] = numbers[last];
-		  numbers[last] = temp;
-		  // don't change start or end
-		}else if(numbers[last] > pv){
-		  last--;
-		}else if(numbers[first] < pv){ // low OK
-		  first++;
-		}else{
-		  cout << "Something went wrong\n";
-		  return;
-		}
-	}
-	quickSort(numbers,so, first-1);
-	quickSort(numbers,last+1,se);
-}*/
-
 void quickSort(vector<int> &v, int start, int end){
   // sort the elements between (and including) start and end
   if(end-start < 1){ // 0
@@ -100,7 +68,6 @@ void quickSort(vector<int> &v, int start, int end){
   int pivot = start;
   int pv = v[pivot];
   while(end-start >= 1){
-	// 4 cases
 	if(v[start] == pv && v[end] == pv){
 	  start++;
 	}else if(v[start] >= pv && v[end] <= pv){ // switch
@@ -113,7 +80,7 @@ void quickSort(vector<int> &v, int start, int end){
 	}else if(v[start] < pv){ // low OK
 	  start++;
 	}else{
-	  cout << "Well crap\n";
+	  cout << "something went wrong";
 	  return;
 	}
   }

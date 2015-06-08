@@ -133,6 +133,28 @@ false if the array contains repeated elements*/
 	return (numbers[first]!=numbers[last]); // returns the result of checking if the elements in those positions are equal
 }
 
+/*bool isUnique1(vector<int> &numbers, int first, int last){
+	if (first >= last) {return true;}
+	if (!isUnique1(numbers, first, last)){
+		if (numbers[first] == numbers[last]){
+			return false;
+		}
+		else{
+			isUnique1(numbers, first, last-1);
+		}
+	}
+	if (!isUnique1(numbers, first, last)){
+		if (numbers[first] == numbers[last]){
+			return false;
+		}
+		else{
+			isUnique1(numbers, first+1, last);
+		}
+	}
+	return true;
+}*/
+
+
 
 bool isUnique2(vector<int> &numbers, int first, int last){ //Iterative validation
    /*Input: Array A, first, last
@@ -204,10 +226,10 @@ int main(){
 		cout << "Please restart program and enter a valid character when prompted" << endl;
 		return 0;
 	}
-	print(numbers); // prints the vector (unsorted)
+	//print(numbers); // prints the vector (unsorted)
 
 	start = clock(); // start timer
-	result = isUnique2(numbers, 0, numbers.size()); // calls the isUnique2 function (iterative check) with first = 0 and last = numbers.size()
+	result = isUnique2(numbers, 0, numbers.size()-1); // calls the isUnique2 function (iterative check) with first = 0 and last = numbers.size()
 	end = clock(); // end timer
 	cout << "Iterative Validation :: "; // prints a statement to the user saying whether the vector is unique or not unique
 	if (result == false) {
@@ -234,7 +256,7 @@ int main(){
 	}
 
 	start = clock(); //starts timer
-	result = isUnique1(numbers, 0, numbers.size()); // calls the isUnique1 function (recursive check) with first = 0 and last = numbers.size()
+	result = isUnique1(numbers, 0, numbers.size()-1); // calls the isUnique1 function (recursive check) with first = 0 and last = numbers.size()
 	end = clock(); // ends timer
 	//print(numbers); // prints vector
 	cout << "Recursive Validation :: "; // prints a statement to the user saying whether the vector is unique or not unique

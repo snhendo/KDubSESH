@@ -33,6 +33,12 @@ void fill(vector<int> &numbers, int count){ // fill takes a vector of numbers an
   }
 }
 
+void fillSorted(vector<int>  &numbers, int size) {
+	for(int i = 0; i < size; i++){
+		numbers.push_back(i);
+	}
+}
+
 void print(vector<int> &numbers){ // print prints the vector's entries
 	cout << "vector = [";
 	for(int i = 0; i < numbers.size(); i++){ // steps through the vector and prints each element
@@ -181,7 +187,23 @@ int main(){
 
 	vector<int> numbers; // initialize the vector of numbers
 	srand(time(0)); // randomizes the rand
-	fill(numbers, size); // calls fill function to fill vector with random elements (vector will be the size that the user determined earlier)
+
+	char filltype;
+	cout << "Do you want a randomized or sorted vector?" << endl;
+	cout << "\t s = sorted" << endl; //prompts user for random or sorted list of numbers
+	cout << "\t r = random" << endl;
+	cin >> filltype; //stores user's selection in variable
+
+	if (filltype == 'r'){
+		fill(numbers, size); // calls fill function to fill vector with random elements (vector will be the size that the user determined earlier)
+	}
+	else if(filltype == 's'){
+		fillSorted(numbers, size); //calls fill function to fill vector with sorted elements
+	}
+	else{
+		cout << "Please restart program and enter a valid character when prompted" << endl;
+		return 0;
+	}
 	print(numbers); // prints the vector (unsorted)
 
 	start = clock(); // start timer

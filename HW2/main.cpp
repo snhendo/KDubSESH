@@ -161,14 +161,12 @@ bool isUnique2(vector<int> &numbers, int first, int last){ //Iterative validatio
    Output:
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
-	//print(numbers); // prints the vector of numbers
 	if (first >= last) {return true;} // if the first and last are equal, it's unique (only one position)
 	for (int i = first; i < last; i++) { // iterates through the vector
 		for (int j = i+1; j <=last; j++) { // looks at the next element and goes through the remainder of the vector
 			if (numbers[i] == numbers[j]) {return false;} // if any values in the vector are the same, the vector is not unique
 		}
 	}
-	//print(numbers); // print the vector
    return true; //if it successfully goes through the for loop without having any duplicated values, then the vector is unique
 }
 
@@ -178,18 +176,12 @@ bool isUnique3(vector<int> numbers, int first, int last, int sortType){ //Sorted
 true if the array contains no repeated elements
 false if the array contains repeated elements*/
 	if (sortType == 0) { // bubbleSort
-		//print(numbers); // prints unsorted vector
 		bubbleSort(numbers); // sorts the vector using bubbleSort
-		//print(numbers); // prints sorted vector
 	}
 	else if (sortType == 1) { // mergeSort
-		//print(numbers); // prints unsorted vector
 		mergeSort(numbers); // sorts the vector using mergeSort
-		//print(numbers); // prints sorted vector
 	} else { // selectionSort
-		//print(numbers); // prints unsorted vector
 		selectionSort(numbers); // sorts the vector using selectionSort
-		//print(numbers); // prints sorted vector
 	} if (first >= last) {return true;} // if first and last are the same, the solution will be unique
 	for (int i =  first; i < last; i++) { // if they're not the same, for loop will check the values of the vector and check for duplicates
 		if (numbers[i] == numbers[i+1]) {return false;} // if any duplicates are detected, the vector is not unique
@@ -264,7 +256,6 @@ int main(){
 		 cout << "NOT ";
 	}
 	cout << "Unique! Time: " << (float)(end-start)*1000/(float)CLOCKS_PER_SEC << endl; // prints out the time it took to determine uniqueness of the vector
-
 
 return 0;
 

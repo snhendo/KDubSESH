@@ -19,7 +19,6 @@ class Conversation(){
 
     Conversation();
     ~Conversation();
-    void insertEmailNode();
     void addEmail();
 
     private:

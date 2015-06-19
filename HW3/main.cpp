@@ -14,11 +14,13 @@ Credit: Referred to Dr. Talaga's examples from CS2
 
 using namespace std;
 
-class Email(){
+class Conversation(){
     public:
 
-    Email();
-    ~Email();
+    Conversation();
+    ~Conversation();
+    void insertEmailNode();
+    void addEmail();
 
     private:
 
@@ -29,13 +31,37 @@ class Email(){
         string message;
     }
     emailNode* head;
+    int count;
 }
 
-Email::Email(){
+Conversation::Conversation(){
     head = NULL;
+    count = 0;
 }
 
-Email::~Email();
+Conversation::~Conversation();
+
+Conversation::addEmail(string newTo; string newFrom; string newMessage){
+    if(count == 0){
+        head = new emailNode newEmailNode;
+        newEmailNode->to = newTo;
+        newEmailNode->from = newFrom;
+        newEmailNode->message = newMessage;
+        newEmailNode->next = NULL;
+        newEmailNode->previous = NULL;
+        count++;
+    }else{
+        emailNode temp = head;
+        head = new emailNode newHead;
+        temp->previous = head;
+        head->to = newTo;
+        head->from = newFrom;
+        head->message = newMessage;
+        head->next = temp;
+        head->previous = NULL;
+        count++;
+    }
+}
 
 class Inbox(){
     public:
@@ -54,6 +80,7 @@ class Inbox(){
         int emailCount;
         commNode* next;
         commNode* previous;
+        commNode* emailNode;
     }
     commNode* head;
     int size;
@@ -93,10 +120,26 @@ void Inbox::displayInbox() const{
     }
 }
 
-void Inbox::insertEmail(string newSubject; string to; string from; string message) const{
+void Inbox::insertEmail(string newSubject; string newTo; string newFrom; string newMessage) const{
     commNode* temp = searchCommunication(newSubject);
-    if(temp != NULL){
-
+    if(temp == NULL){
+        temp = head;
+        head = new commNode newCommNode;
+        newCommNode->next = temp;
+        newCommNode->emailCount = 1;
+        newCommNode->subject = newSubject;
+        newCommNode->emailNode = new Conversation newConversation;
+        newConversation.addEmail(newTo; newFrom; newMessage);
+        newCommNode->next = NULL;
+        newCommNode->previous = NULL;
+    }else{
+        temp->previous->next = temp->next;
+        temp->next->previous = temp->previous;
+        commNode* tempHead = head;
+        head = temp;
+        head->previous = NULL;
+        head->next = tempHead;
+        tempHead->previous = head;
     }
 }
 

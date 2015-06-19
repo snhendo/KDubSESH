@@ -131,6 +131,7 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
         newConversation.addEmail(newTo, newFrom, newMessage);
         newCommNode->next = NULL;
         newCommNode->previous = NULL;
+        cout << "Email added to new conversation." << endl;
     }else{
         temp->previous->next = temp->next;
         temp->next->previous = temp->previous;
@@ -141,6 +142,19 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
         tempHead->previous = head;
         head->emailCount++;
         head->emailNode.addEmail(newTo, newFrom, newMessage);
+        cout << "Email added to existing conversation." << endl;
+    }
+}
+
+void Inbox::deleteConversation(string deleteSubject){
+    commNode* temp = searchCommunication(deleteSubject);
+    if(temp == NULL){
+        cout << "Conversation does not exist." << endl;
+    }else{
+        temp->previous->next = temp->next;
+        temp->next->previous = temp->previous;
+        emailCount--;
+        cout << "Conversation deleted." << endl;
     }
 }
 

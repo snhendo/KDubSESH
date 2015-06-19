@@ -44,16 +44,19 @@ Conversation::Conversation(){
 Conversation::~Conversation(){}
 
 void Conversation::addEmail(string newTo, string newFrom, string newMessage){
-	if(count == 0){
+	//cout << this->count << endl;
+	if(true){
 		emailNode* newEmailNode;
 		head = newEmailNode;
-		newEmailNode->to = newTo;
-		newEmailNode->from = newFrom;
-		newEmailNode->message = newMessage;
-		newEmailNode->next = NULL;
-		newEmailNode->previous = NULL;
-		count++;
+		cout << "butts2" << endl;
+		head->to = newTo;
+		head->from = newFrom;
+		head->message = newMessage;
+		head->next = NULL;
+		head->previous = NULL;
+		//this->count++;
 	}else{
+		cout << "big butts" << endl;
 		emailNode* temp = head;
 		emailNode* newHead;
 		head = newHead;
@@ -63,7 +66,7 @@ void Conversation::addEmail(string newTo, string newFrom, string newMessage){
 		head->message = newMessage;
 		head->next = temp;
 		head->previous = NULL;
-		count++;
+		//this->count++;
 	}
 }
 
@@ -138,6 +141,7 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
 		Conversation* newConversation;
 		newCommNode->emailNode = newConversation;
 		newConversation->addEmail(newTo, newFrom, newMessage);
+			cout << "butts after addEmail" << endl;
 		newCommNode->next = NULL;
 		newCommNode->previous = NULL;
 		cout << "Email added to new conversation." << endl;

@@ -62,7 +62,7 @@ void Conversation::addEmail(string newTo, string newFrom, string newMessage){ //
         head->from = newFrom;
         head->message = newMessage;
         head->next = temp; // head next points to where temp was pointing
-        head->previous = NULL;
+        head->previous = NULL; // just verify that there's no previous
         count++; // increment count (number of emails per conversation)
     }
 }
@@ -70,50 +70,50 @@ void Conversation::addEmail(string newTo, string newFrom, string newMessage){ //
 class Inbox{ // initialize inbox class
     public:
 
-    Inbox();
-    ~Inbox();
-    void insertEmail(string newSubject, string newTo, string newFrom, string newMessage);
+    Inbox(); // constructor
+    ~Inbox(); // destructor
+    void insertEmail(string newSubject, string newTo, string newFrom, string newMessage); // initialize functions needed with this class
     void deleteCommunication(string deleteSubject);
     void displayInbox() const;
 
     private:
 
-    class commNode{
+    class commNode{ // initialize communication Node
         public:
-        string subject;
-        int emailCount;
-        commNode* next;
+        string subject; // contains subject
+        int emailCount; // number of emails with that subject
+        commNode* next; // next and previous variables (doubly-linked list)
         commNode* previous;
-        Conversation* emailNode;
+        Conversation* emailNode; // points to the conversation chain
     };
-    commNode* head;
-    int size;
-    commNode* searchCommunication(string newSubject) const;
+    commNode* head; // head pointer
+    int size; // initialize size (number of emails period)
+    commNode* searchCommunication(string newSubject) const; // initialize a function to allow it to return a pointer
 };
 
-Inbox::Inbox(){
+Inbox::Inbox(){ // constructor initializes head/size
     head = NULL;
     size = 0;
 }
 
-Inbox::~Inbox(){}
+Inbox::~Inbox(){} // destructor
 
-Inbox::commNode* Inbox::searchCommunication(string newSubject) const{
-    commNode* temp = head;
-    while (temp != NULL){
-        if(temp->subject == newSubject){
-            return temp;
+Inbox::commNode* Inbox::searchCommunication(string newSubject) const{ // takes in subject and returns a pointer to conversation (or null if subject not found)
+    commNode* temp = head; // temp points to same location as head
+    while (temp != NULL){ // if temp is not null (list not empty)
+        if(temp->subject == newSubject){ // search for subject
+            return temp; // when found, return temp
         }
-        if(temp->next != NULL){
+        if(temp->next != NULL){ // if temp->next is not null, "increment" temp to step through
             temp = temp->next;
         }else{
-            return NULL;
+            return NULL; // otherwise return a null pointer
         }
     }
     return NULL;
 }
 
-void Inbox::displayInbox() const{
+void Inbox::displayInbox() const{ // prints the Inbox info
     cout << "Inbox: total number of emails is " << size << endl;
     commNode* temp = head;
     while(temp != NULL){
@@ -126,9 +126,9 @@ void Inbox::displayInbox() const{
     }
 }
 
-void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string newMessage){
-    commNode* temp = searchCommunication(newSubject);
-    if(temp == NULL){
+void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string newMessage){ // inserts email
+    commNode* temp = searchCommunication(newSubject); //checks for subject
+    if(temp == NULL){ // no subject found == insert the email at the beginning of list as new conversation
         temp = head;
         commNode* newCommNode;
         head = newCommNode;
@@ -141,7 +141,7 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
         newCommNode->next = NULL;
         newCommNode->previous = NULL;
         cout << "Email added to new conversation." << endl;
-    }else{
+    }else{ // subject found = attach to existing list of conversations with that subject and move to beginning of list
         temp->previous->next = temp->next;
         temp->next->previous = temp->previous;
         commNode* tempHead = head;
@@ -153,10 +153,10 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
         head->emailNode->addEmail(newTo, newFrom, newMessage);
         cout << "Email added to existing conversation." << endl;
     }
-    size++;
+    size++; // increment size
 }
 
-void Inbox::deleteCommunication(string deleteSubject){
+void Inbox::deleteCommunication(string deleteSubject){ // deletes a conversation (after checking if one exists)
     commNode* temp = searchCommunication(deleteSubject);
     if(temp == NULL){
         cout << "Conversation does not exist." << endl;
@@ -168,15 +168,18 @@ void Inbox::deleteCommunication(string deleteSubject){
     }
 }
 
-int main() {
+int main() { // prompts user for input and calls the appropriate functions based on user response
     cout << "Welcome to your Inbox!" << endl;
     Inbox inbox;
-    string command = "";
-    while(command != "done"){
-        command = "";
-        cout << "To terminate, enter 'done'." << endl << "To insert an email, enter 'insert'." << endl << "To delete a conversation, enter 'delete'." << endl << "To display your inbox, enter 'display'." << endl;
+    string command = ""; // initialize empty string
+    while(command != "done"){ // until user terminates program, we want to run through the following
+        command = ""; // initialize to empty string again (for more than one loop)
+        cout << "To terminate, enter 'done'." << endl
+            << "To insert an email, enter 'insert'." << endl
+            << "To delete a conversation, enter 'delete'."
+            << endl << "To display your inbox, enter 'display'." << endl;
         cin >> command;
-        if(command == "insert"){
+        if(command == "insert"){ // calls necessary functions for insert
             string newSubject, newTo, newFrom, newMessage;
             cout << "Subject?" << endl;
             cin >> newSubject;
@@ -187,18 +190,18 @@ int main() {
             cout << "Message?" << endl;
             cin >> newMessage;
             inbox.insertEmail(newSubject, newTo, newFrom, newMessage);
-        }else if(command == "delete"){
+        }else if(command == "delete"){ // calls necessary functions for delete
             string deleteSubject;
             cout << "Subject?" << endl;
             cin >> deleteSubject;
             inbox.deleteCommunication(deleteSubject);
-        }else if(command == "display"){
+        }else if(command == "display"){ // calls necessary functions for display
             inbox.displayInbox();
-        }else if(command == "done"){
+        }else if(command == "done"){ // terminates program
             return 0;
         }else{
-            cout << "That command was not recognized." << endl;
+            cout << "That command was not recognized." << endl; // for invalid entries
         }
     }
     return 0;
-}
+} // end program

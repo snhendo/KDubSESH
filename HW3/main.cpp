@@ -40,7 +40,7 @@ Conversation::Conversation(){
 
 Conversation::~Conversation();
 
-Conversation::addEmail(string newTo; string newFrom; string newMessage){
+Conversation::addEmail(string newTo, string newFrom, string newMessage){
     if(count == 0){
         head = new emailNode newEmailNode;
         newEmailNode->to = newTo;
@@ -119,7 +119,7 @@ void Inbox::displayInbox() const{
     }
 }
 
-void Inbox::insertEmail(string newSubject; string newTo; string newFrom; string newMessage) const{
+void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string newMessage) const{
     commNode* temp = searchCommunication(newSubject);
     if(temp == NULL){
         temp = head;
@@ -128,7 +128,7 @@ void Inbox::insertEmail(string newSubject; string newTo; string newFrom; string 
         newCommNode->emailCount = 1;
         newCommNode->subject = newSubject;
         newCommNode->emailNode = new Conversation newConversation;
-        newConversation.addEmail(newTo; newFrom; newMessage);
+        newConversation.addEmail(newTo, newFrom, newMessage);
         newCommNode->next = NULL;
         newCommNode->previous = NULL;
     }else{
@@ -139,6 +139,8 @@ void Inbox::insertEmail(string newSubject; string newTo; string newFrom; string 
         head->previous = NULL;
         head->next = tempHead;
         tempHead->previous = head;
+        head->emailCount++;
+        head->emailNode.addEmail(newTo, newFrom, newMessage);
     }
 }
 

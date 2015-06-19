@@ -42,7 +42,7 @@ Conversation::~Conversation();
 
 Conversation::addEmail(string newTo, string newFrom, string newMessage){
     if(count == 0){
-        head = new emailNode newEmailNode;
+        head = new emailNode* newEmailNode;
         newEmailNode->to = newTo;
         newEmailNode->from = newFrom;
         newEmailNode->message = newMessage;
@@ -51,7 +51,7 @@ Conversation::addEmail(string newTo, string newFrom, string newMessage){
         count++;
     }else{
         emailNode temp = head;
-        head = new emailNode newHead;
+        head = new emailNode* newHead;
         temp->previous = head;
         head->to = newTo;
         head->from = newFrom;
@@ -123,7 +123,7 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
     commNode* temp = searchCommunication(newSubject);
     if(temp == NULL){
         temp = head;
-        head = new commNode newCommNode;
+        head = new commNode* newCommNode;
         newCommNode->next = temp;
         newCommNode->emailCount = 1;
         newCommNode->subject = newSubject;

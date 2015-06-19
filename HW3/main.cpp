@@ -159,7 +159,33 @@ void Inbox::deleteConversation(string deleteSubject){
 }
 
 int main() {
+    cout << "Welcome to your Inbox!" << endl;
+    Inbox inbox;
+    string command = "";
+    while(command != "done"){
+        cout << "To terminate the program, enter 'done'." << endl << "To insert an email, enter 'insert'." << endl << "To delete a conversation, enter 'delete'." << endl << "To display your inbox, enter 'display'." << endl;
+        cin >> command;
+        if(command == "insert"){
+            cout << "Subject?" << endl;
+            cin >> string newSubject;
+            cout << "To?" << endl;
+            cin >> string newTo;
+            cout << "From?" << endl;
+            cin >> string newFrom;
+            cout << "Message?" << endl;
+            cin >> string newMessage;
+            inbox.insertEmail(newSubject, newTo, newFrom, newMessage);
+        }else if(command == "delete"){
+            cout << "Subject?" << endl;
+            cin >> string deleteSubject;
+            inbox.deleteConversation(deleteSubject);
+        }else if(command == "display"){
+            inbox.displayInbox();
+        }else{
+            cout << "That command was not recognized." << endl;
+        }
+    }
 
-return 0;
+    return 0;
 
 }

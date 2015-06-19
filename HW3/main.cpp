@@ -44,19 +44,16 @@ Conversation::Conversation(){
 Conversation::~Conversation(){}
 
 void Conversation::addEmail(string newTo, string newFrom, string newMessage){
-	//cout << this->count << endl;
-	if(true){
+	if(count == 0){
 		emailNode* newEmailNode;
 		head = newEmailNode;
-		cout << "butts2" << endl;
 		head->to = newTo;
 		head->from = newFrom;
 		head->message = newMessage;
 		head->next = NULL;
 		head->previous = NULL;
-		//this->count++;
+		count++;
 	}else{
-		cout << "big butts" << endl;
 		emailNode* temp = head;
 		emailNode* newHead;
 		head = newHead;
@@ -66,7 +63,7 @@ void Conversation::addEmail(string newTo, string newFrom, string newMessage){
 		head->message = newMessage;
 		head->next = temp;
 		head->previous = NULL;
-		//this->count++;
+		count++;
 	}
 }
 
@@ -141,7 +138,6 @@ void Inbox::insertEmail(string newSubject, string newTo, string newFrom, string 
 		Conversation* newConversation;
 		newCommNode->emailNode = newConversation;
 		newConversation->addEmail(newTo, newFrom, newMessage);
-			cout << "butts after addEmail" << endl;
 		newCommNode->next = NULL;
 		newCommNode->previous = NULL;
 		cout << "Email added to new conversation." << endl;
@@ -177,7 +173,8 @@ int main() {
 	Inbox inbox;
 	string command = "";
 	while(command != "done"){
-		cout << "To terminate the program, enter 'done'." << endl << "To insert an email, enter 'insert'." << endl << "To delete a conversation, enter 'delete'." << endl << "To display your inbox, enter 'display'." << endl;
+		command = "";
+		cout << "To terminate, enter 'done'." << endl << "To insert an email, enter 'insert'." << endl << "To delete a conversation, enter 'delete'." << endl << "To display your inbox, enter 'display'." << endl;
 		cin >> command;
 		if(command == "insert"){
 			string newSubject, newTo, newFrom, newMessage;
@@ -203,7 +200,5 @@ int main() {
 			cout << "That command was not recognized." << endl;
 		}
 	}
-
 	return 0;
-
 }

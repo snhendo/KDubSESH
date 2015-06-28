@@ -143,46 +143,77 @@ void hybridSort (vector<int> &v, string Large, string Small, int T) {
     }
 }
 
+void listDisplayer(vector<int> &v) {
+    cout << "{";
+    for (int i = 0; i < v.size(); i++) {
+        if (i != 1){
+            cout << ", ";
+        }
+        cout << v[i];
+    }
+}
+
 int main () {
     cout << "Welcome to Sort! Follow the prompts to produce a sorted list." << endl;
-    cout << "What is the size of your list?" << endl;
-    int listSize = 0;
-    cin >> listSize;
-    char listGeneration = 'm';
-    char listDisplay = 'y';
-    if (listSize <= 100) {
-        cout << "Would you like to enter it manually (m) or have it randomly generated (r)?";
-        cin >> listGeneration;
-        cout << "Would you like the list to be displayed? Yes (y) or No (n)?" << endl;
-        cin >> listDisplay;
-    } else {
-        listGeneration = 'r';
-        listDisplay = 'n';
-    }
-    vector<int> listValues;
-    if (listGeneration == 'm') {
-        cout << "Enter one value at a time. Press return before entering another value. Enter '!' when done." << endl;
-        string temp = "";
-        while (temp != "!") {
-            cout << "Value" << listValues.size() + 1 << ": ";
-            cin >> temp;
-            listValues.push_back(int(temp));
+    char repeat = 'y';
+    while (repeat == 'y') {
+        cout << "At what threshold should this be considered a large list?" << endl;
+        int sortThreshold = 0;
+        cin >> sortThreshold;
+        cout << "What is the size of your list?" << endl;
+        int listSize = 0;
+        cin >> listSize;
+        char listGeneration = 'm';
+        char listDisplay = 'y';
+        if (listSize <= 100) {
+            cout << "Would you like to enter it manually (m) or have it randomly generated (r)?";
+            cin >> listGeneration;
+            cout << "Would you like the list to be displayed? Yes (y) or No (n)?" << endl;
+            cin >> listDisplay;
+        } else {
+            listGeneration = 'r';
+            listDisplay = 'n';
         }
-    } else if (listGeneration == 'r') {
-        srand(time(0));
-        for (int i = 0; i < listSize; i++) {
-            int randValue = rand() % listSize * 10;
-            listValues.push_back(randValue);
-        }
-    }
-    if (listDisplay == 'y') {
-        cout << "{";
-        for (int i = 0; i < listSize; i++) {
-            if (i != 1){
-                cout << ", ";
+        vector<int> listValues;
+        if (listGeneration == 'm') {
+            cout << "Enter one value at a time. Press return before entering another value. Enter '!' when done." << endl;
+            string temp = "";
+            while (temp != "!") {
+                cout << "Value" << listValues.size() + 1 << ": ";
+                cin >> temp;
+                listValues.push_back(int(temp));
             }
-            cout << listValues[i];
+        } else if (listGeneration == 'r') {
+            srand(time(0));
+            for (int i = 0; i < listSize; i++) {
+                int randValue = rand() % listSize * 10;
+                listValues.push_back(randValue);
+            }
         }
-        cout << "}" << endl;
+        if (listDisplay == 'y') {
+            listDisplayer(listValues);
+        }
+        vector<int> result = listValues;
+        hybridSort(result, "MergeSort", "BubbleSort", sortThreshold);
+        if (listDisplay == 'y') {
+            listDisplayer(result);
+        }
+        result = listValues;
+        hybridSort(result, "MergeSort", "InsertionSort", sortThreshold);
+        if (listDisplay == 'y') {
+            listDisplayer(result);
+        }
+        result = listValues;
+        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold);
+        if (listDisplay == 'y') {
+            listDisplayer(result);
+        }
+        result = listValues;
+        hybridSort(result, "QuickSort", "InsertionSort", sortThreshold);
+        if (listDisplay == 'y') {
+            listDisplayer(result);
+        }
+        cout << "Would you like to sort another list? (y/n)" << endl;
+        cin >> restart;
     }
 }

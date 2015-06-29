@@ -235,7 +235,9 @@ int main () {
         int comparisons = 0;
         string sortType="";
         hybridSort(result, "MergeSort", "BubbleSort", sortThreshold, comparisons, sortType);
-        cout << sortType << endl;
+        if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
+            cout << sortType << endl;
+        }
         if (listDisplay == 'y') {
             listDisplayer(result);
         }
@@ -245,7 +247,9 @@ int main () {
         result = listValues;
         comparisons = 0;
         hybridSort(result, "MergeSort", "InsertionSort", sortThreshold, comparisons, sortType);
-        cout << sortType << endl;
+        if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
+            cout << sortType << endl;
+        }
         if (listDisplay == 'y') {
             listDisplayer(result);
         }
@@ -258,7 +262,9 @@ int main () {
         result = listValues;
         comparisons = 0;
         hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons, sortType);
-        cout << sortType << endl;
+        if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
+            cout << sortType << endl;
+        }
         if (listDisplay == 'y') {
             cout << sortType << endl;
             listDisplayer(result);
@@ -269,7 +275,9 @@ int main () {
         result = listValues;
         comparisons = 0;
         hybridSort(result, "QuickSort", "InsertionSort", sortThreshold, comparisons, sortType);
-        cout << sortType << endl;
+        if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
+            cout << sortType << endl;
+        }
         if (listDisplay == 'y') {
             listDisplayer(result);
         }

@@ -199,6 +199,7 @@ int main () {
         cin >> listSize;
         char listGeneration = 'm';
         char listDisplay = 'y';
+        char listComparisonsDisplay = 'y';
         if (listSize <= 100) {
             cout << "Would you like to enter it manually (m) or have it randomly generated (r)?" << endl;
             cin >> listGeneration;
@@ -208,6 +209,8 @@ int main () {
             listGeneration = 'r';
             listDisplay = 'n';
         }
+        cout << "Would you like the comparisons counts to be displayed? Yes (y) or No (n)?" << endl;
+        cin >> listComparisonsDisplay;
         vector<int> listValues;
         if (listGeneration == 'm') {
             cout << "Enter one value at a time. Press return before entering another value." << endl;
@@ -232,17 +235,21 @@ int main () {
         int comparisons = 0;
         string sortType="";
         hybridSort(result, "MergeSort", "BubbleSort", sortThreshold, comparisons, sortType);
+        cout << sortType << endl;
         if (listDisplay == 'y') {
-            cout << sortType << endl;
             listDisplayer(result);
+        }
+        if (listComparisonsDisplay == 'y'){
             cout << "Comparisons: " << comparisons << endl;
         }
         result = listValues;
         comparisons = 0;
         hybridSort(result, "MergeSort", "InsertionSort", sortThreshold, comparisons, sortType);
+        cout << sortType << endl;
         if (listDisplay == 'y') {
-            cout << sortType << endl;
             listDisplayer(result);
+        }
+        if (listComparisonsDisplay == 'y'){
             cout << "Comparisons: " << comparisons << endl;
         }
         result = listValues; // avoiding an error
@@ -251,17 +258,22 @@ int main () {
         result = listValues;
         comparisons = 0;
         hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons, sortType);
+        cout << sortType << endl;
         if (listDisplay == 'y') {
             cout << sortType << endl;
             listDisplayer(result);
+        }
+        if (listComparisonsDisplay == 'y'){
             cout << "Comparisons: " << comparisons << endl;
         }
         result = listValues;
         comparisons = 0;
         hybridSort(result, "QuickSort", "InsertionSort", sortThreshold, comparisons, sortType);
+        cout << sortType << endl;
         if (listDisplay == 'y') {
-            cout << sortType << endl;
             listDisplayer(result);
+        }
+        if (listComparisonsDisplay == 'y'){
             cout << "Comparisons: " << comparisons << endl;
         }
         cout << "Would you like to sort another list? (y/n)" << endl;

@@ -191,7 +191,7 @@ int main () {
     cout << "Welcome to Sort! Follow the prompts to produce a sorted list." << endl;
     char restart = 'y';
     while (restart == 'y') {
-        cout << "At what threshold should this be considered a large list?" << endl;
+        cout << "At what threshold should this be considered a large list? Please choose a value between 8 and 16." << endl;
         int sortThreshold = 0;
         cin >> sortThreshold;
         cout << "What is the size of your list?" << endl;

@@ -49,6 +49,7 @@ int Partition(vector<int> &a, int beg, int end) {         //Function to Find Piv
 
 void quickSort(vector<int> &a, int beg, int end, int &comparisons)
 {
+    comparisons++;
     if(beg<end) {
         int p=Partition(a,beg,end);                       //Calling Procedure to Find Pivot
         quickSort(a,beg,p-1, comparisons);                             //Calls Itself (Recursion)

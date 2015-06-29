@@ -18,7 +18,7 @@ Credit: Referred to Dr. Talaga's examples from CS2
 using namespace std;
 
 // insertion sort from http://mycodinglab.com/insertion-sort-algorithm/
-void insertionSort(vector<int> &v){
+void insertionSort(vector<int> &v, int &comparisons){
     int i, j, tmp;
     for (i = 1; i < v.size(); i++) {
         j = i;
@@ -27,6 +27,7 @@ void insertionSort(vector<int> &v){
             v[j] = v[j - 1];
             v[j - 1] = tmp;
             j--;
+            comparisons++;
         }
     }
 }
@@ -46,12 +47,12 @@ int Partition(vector<int> &a, int beg, int end) {         //Function to Find Piv
 }
 
 
-void quickSort(vector<int> &a, int beg, int end)
+void quickSort(vector<int> &a, int beg, int end, int &comparisons)
 {
     if(beg<end) {
         int p=Partition(a,beg,end);                       //Calling Procedure to Find Pivot
-        quickSort(a,beg,p-1);                             //Calls Itself (Recursion)
-        quickSort(a,p+1,end);			              //Calls Itself (Recursion)
+        quickSort(a,beg,p-1, comparisons);                             //Calls Itself (Recursion)
+        quickSort(a,p+1,end, comparisons);			              //Calls Itself (Recursion)
     }
 }
 
@@ -94,7 +95,8 @@ void quickSort(vector<int> &a, int beg, int end)
 
 
 // bubble sort from Dr. Talaga's examples from CS2
-void bubbleSort(vector<int> &numbers){ // bubbleSort takes a vector of numbers
+void bubbleSort(vector<int> &numbers, int &comparisons){ // bubbleSort takes a vector of numbers
+    int flips = 0;
     for(unsigned int i = 0; i < numbers.size(); i++){ // for will execute for the number of elements in the vector
         bool swapped = false; // initialize swapped variable and set to false (to be switched to true later)
         for(unsigned int j = 0; j < numbers.size()-1; j++){ // second for loop actually takes care of swapping of elements
@@ -105,7 +107,8 @@ void bubbleSort(vector<int> &numbers){ // bubbleSort takes a vector of numbers
                 swapped = true; // changed swap to true
           }
         }
-        if(!swapped){return;} // when swapped is false, everything is sorted, so we leave the function
+        comparisons++;
+        if(!swapped){return flips;} // when swapped is false, everything is sorted, so we leave the function
     }
 }
 
@@ -132,7 +135,7 @@ vector<int> merge(vector<int> &left, vector<int> &right){ // merge takes in the 
     return result; // return the merged vector
   }
 
-  void mergeSort(vector<int> &v){ // mergeSort sorts a vector
+  void mergeSort(vector<int> &v, int &comparisons){ // mergeSort sorts a vector
     if(v.size() <= 1){ // if size is 0 or 1, it's safe to assume that the vector is sorted
       return; // leave the function
     }
@@ -145,28 +148,29 @@ vector<int> merge(vector<int> &left, vector<int> &right){ // merge takes in the 
       }else{
         right.push_back(v[i]); // second half will be pushed into the right vector
       }
+        comparisons++;
     }
     mergeSort(left); // recursively calls mergesSort on the left hand side (breaks down the left vector until there's only one element
     mergeSort(right); // recursively calls mergeSort on the right hand side (breaks down the right vector until there's only one element
     v = merge(left,right); // merges the left and right vectors together to complete the sorting process
   }
 
-void hybridSort (vector<int> &v, string Large, string Small, int T) {
+void hybridSort (vector<int> &v, string Large, string Small, int T, int &comparisons) {
     if (v.size() > T) {
         if (Large == "MergeSort") {
             cout << "Merge Sort" << endl;
-            mergeSort(v);
+            mergeSort(v, comparisons);
         } else {
             cout << "Quick Sort" << endl;
-            quickSort(v, 0, v.size());
+            quickSort(v, 0, v.size(), comparisons);
         }
     } else {
         if (Small == "BubbleSort") {
             cout << "Bubble Sort" << endl;
-            bubbleSort(v);
+            bubbleSort(v, comparisons);
         } else {
             cout << "Insertion Sort" << endl;
-            insertionSort(v);
+            insertionSort(v, comparisons);
         }
     }
 }
@@ -224,26 +228,35 @@ int main () {
             listDisplayer(listValues);
         }
         vector<int> result = listValues;
-        hybridSort(result, "MergeSort", "BubbleSort", sortThreshold);
+        int comparisons = 0;
+        hybridSort(result, "MergeSort", "BubbleSort", sortThreshold, comparisons);
         if (listDisplay == 'y') {
             listDisplayer(result);
+            cout << "Comparisons: " << comparisons << endl;
         }
         result = listValues;
-        hybridSort(result, "MergeSort", "InsertionSort", sortThreshold);
+        comparisons = 0;
+        hybridSort(result, "MergeSort", "InsertionSort", sortThreshold, comparisons);
         if (listDisplay == 'y') {
             listDisplayer(result);
+            cout << "Comparisons: " << comparisons << endl;
         }
         result = listValues;
-        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold);
-        result = listValues;
-        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold);
+        comparisons = 0;
+        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons);
+        result = listValues; //testing a theory
+        comparisons = 0;
+        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons);
         if (listDisplay == 'y') {
             listDisplayer(result);
+            cout << "Comparisons: " << comparisons << endl;
         }
         result = listValues;
-        hybridSort(result, "QuickSort", "InsertionSort", sortThreshold);
+        comparisons = 0;
+        hybridSort(result, "QuickSort", "InsertionSort", sortThreshold, comparisons);
         if (listDisplay == 'y') {
             listDisplayer(result);
+            cout << "Comparisons: " << comparisons << endl;
         }
         cout << "Would you like to sort another list? (y/n)" << endl;
         cin >> restart;

@@ -229,6 +229,7 @@ int main () {
         }
         vector<int> result = listValues;
         int comparisons = 0;
+        string sortType="";
         hybridSort(result, "MergeSort", "BubbleSort", sortThreshold, comparisons, sortType);
         if (listDisplay == 'y') {
             cout << sortType << endl;

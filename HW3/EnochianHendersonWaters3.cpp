@@ -11,7 +11,7 @@ Course number: CS2028
 Instructor: Anca Ralescu
 TA: Suryadip Chakraborty
 Abstract: Assignment 3 main.cpp uses doubly-linked lists to imitate an email
-inbox by using functions <insert function names here> to do <the following tasks>.
+inbox by using the functions insertEmail, deleteConversation, and displayInbox to do add emails to the inbox, add emails to communications of the same subject, and print the inbox to the user.
 Preconditions: None
 Postconditions: None
 Credit: Referred to Dr. Talaga's examples from CS2
@@ -106,12 +106,12 @@ class Inbox {
     Conversation* inboxTail;
 };
 
-Inbox::Inbox() {
+Inbox::Inbox() { // constructor to initialize the head and tail of the inbox to NULL (inbox is currently empty)
     inboxHead = NULL;
     inboxTail = NULL;
 }
 
-emailNode::emailNode(string to, string from, string message) {
+emailNode::emailNode(string to, string from, string message) { // define an emailNode and initialize details (to, from, message, what the next element is and what the previous element is
         this->to = to;
         this->from = from;
         this->message = message;
@@ -119,13 +119,12 @@ emailNode::emailNode(string to, string from, string message) {
         this->previous = NULL;
 }
 
+//Getters for the Email class (emailNode)
 string emailNode::getTo() { return to; }
-
 string emailNode::getFrom() { return from; }
-
 string emailNode::getMessage() { return message; }
 
-Conversation::Conversation(string subject, emailNode* email){
+Conversation::Conversation(string subject, emailNode* email){ // constructor for Conversation class (Communication nodes); initializes the subject, emailHead, emailHead's next/previous pointers (where they are pointing to), and size of the Conversation
         this->subject = subject;
         emailHead = email;
         emailHead->next = NULL;
@@ -133,7 +132,7 @@ Conversation::Conversation(string subject, emailNode* email){
         size = 1;
 }
 
-Conversation::Conversation(Conversation& other) {
+Conversation::Conversation(Conversation& other) { // copy constructor for Conversation class (Communication nodes), simply copies the conversation and it's details
         this->next = other.next;
         this->previous = other.previous;
         this->subject = other.subject;
@@ -141,18 +140,18 @@ Conversation::Conversation(Conversation& other) {
         this->emailHead = other.emailHead;
 }
 
-void Conversation::newEmail(emailNode* email) {
+void Conversation::newEmail(emailNode* email) { // new email function takes in a pointer to an email and adds it to the Inbox
         email->previous = emailHead;
         emailHead = email;
         emailHead->next = NULL;
         size++;
 }
 
+//Getter functions for the Conversation class (Communication nodes)
 string Conversation::getSub() { return subject; }
-
 int Conversation::getSize() { return size; }
 
-Conversation::~Conversation() {
+Conversation::~Conversation() { // Conversation destructor (for Communication nodes), deletes pointers when no longer needed
     emailNode* temp = emailHead;
     emailNode* temp2 = emailHead;
     while (temp != NULL) {
@@ -162,33 +161,33 @@ Conversation::~Conversation() {
     }
 }
 
-Conversation* Inbox::searchConvo(string subject) {
+Conversation* Inbox::searchConvo(string subject) { // takes in a subject and looks through the Inbox for that subject, returns the pointer and what it points to
     Conversation* temp = inboxHead;
     while (temp != NULL) {
-        if (temp->getSub() == subject) {
+        if (temp->getSub() == subject) { // if the subject is found, we return the temp variable and the value it points to
             return temp;
         }
         temp = temp->previous;
     }
-    // if no such communication exists, return NULL
+    // if no such communication exists, return NULL (will be added to the inbox in another function
     return NULL;
 }
 
-Inbox::Inbox(Inbox& other) {
+Inbox::Inbox(Inbox& other) { // Inbox copy constructor, copies the inboxHead and inboxTail
     inboxHead = other.inboxHead;
     inboxTail = other.inboxTail;
 }
 
-void Inbox::insertEmail(emailNode* email, string subject) {
+void Inbox::insertEmail(emailNode* email, string subject) { // takes in an email (pointer) and subject and inserts it into the Inbox
     // search for a communication with the given subject to place the email in
-    Conversation* temp = searchConvo(subject);
-    if (temp != NULL) { // if a communication already exists
+    Conversation* temp = searchConvo(subject); // look for the subject that is already in the inbox
+    if (temp != NULL) { // if a communication already exists, add the email to the communication
         temp->newEmail(email);
         if (temp->next != NULL) {// if not already there, move the communication to the top of the inbox
             if (temp->previous != NULL) {
                 (temp->previous)->next = temp->next;
             }
-            else {
+            else { // "move" the end of the Inbox
                 this->inboxTail = temp->next;
             }
             (temp->next)->previous = temp->previous;
@@ -215,9 +214,9 @@ void Inbox::insertEmail(emailNode* email, string subject) {
     }
 }
 
-bool Inbox::deleteConversation(string subject) {
-    Conversation* temp = searchConvo(subject);
-    if (temp != NULL) {
+bool Inbox::deleteConversation(string subject) { // attempts to remove a conversation by subject, returns true if successful and false if not
+    Conversation* temp = searchConvo(subject); // look through inbox for desired subject
+    if (temp != NULL) { // if subject is found, delete the conversation and return true
         Conversation* next = temp->next;
         Conversation* previous = temp->previous;
 
@@ -228,12 +227,12 @@ bool Inbox::deleteConversation(string subject) {
 
         return true;
     }
-    // return false if no such communication was found
+    // return false if no such communication was found (can't delete what isn't there)
     return false;
 }
 
-void Inbox::displayInbox() {
-    if (inboxHead != NULL) {
+void Inbox::displayInbox() { // print function that displays the inbox to the user
+    if (inboxHead != NULL) { // as long as the list isn't empty, start at the top of the inbox
         Conversation* current = inboxHead;
 
         // get total number of emails
@@ -243,19 +242,19 @@ void Inbox::displayInbox() {
             current = current->previous;
         }
 
-        cout << "Total number of emails in inbox: " << size << endl;
+        cout << "Total number of emails in inbox: " << size << endl; // prints number of emails in the inbox to the user
 
         // list communications and the number of emails in each one
         current = inboxHead;
         while (current != NULL) {
-            cout << current->getSub() << " - " << current->getSize() << endl;
+            cout << current->getSub() << " - " << current->getSize() << endl; // prints subjects and how many emails exist with that same subject
             current = current->previous;
         }
         cout << endl;
     }
 }
 
-Inbox::~Inbox() {
+Inbox::~Inbox() { // Inbox destructor to delete pointers that are no longer needed
     Conversation* temp = inboxHead;
     Conversation* temp2 = inboxHead;
     while (temp != NULL) {
@@ -266,234 +265,21 @@ Inbox::~Inbox() {
 }
 
 int main() {
-    string subject = "";
+    string subject = ""; // initialize subject, inbox, and inform the user how to use the program
     Inbox inbox;
     cout << endl << "Welcome to your inbox!" << endl;
     cout << "Enter an email subject, then hit enter after each one. " << endl;
     cout << "To terminate, enter 'done' followed by another enter." << endl << endl;
 
     // get subjects from user
-    while (getline(cin, subject) && subject != "done") {
+    while (getline(cin, subject) && subject != "done") { // as long as user doesn't enter done and keeps entering subjects, we will add the emails to the inbox
         inbox.insertEmail(new emailNode("to", "from", "message"), subject);
 
     }
     //display inbox
-    inbox.displayInbox();
+    inbox.displayInbox(); // when user is done, we will display the inbox
 
     return 0;
 }
 
-
-
-
-
-
-
-
-
-/*
-#include<iostream>
-#include<string>
-#include<vector>
-
-using namespace std;
-
-class emailNode{ // create email node that contains the to/from/message and also contains the next and previous pointers (doubly-linked)
-    private:
-    string to;
-    string from;
-    string message;
-
-    public:
-    emailNode(string newTo, string newFrom, string newMessage); //constructor
-    string getTo(); //get newTo
-    string getFrom(); //get newFrom
-    string getMessage(); //get newMessage
-    emailNode* next;
-    emailNode* previous;
-
-};
-
-class Conversation{ // this will be the Conversation Node, changed to Conversation to make it easier to follow
-    public:
-    Conversation(string subject, emailNode* email); //constructor
-    Conversation(Conversation& otherConvo); //copy constructor
-    ~Conversation(); // destructor
-    void addEmail(emailNode* email); // add email function (to push to linked list)
-    string getSub(); //get subject
-    int getSize(); //get size of list
-    Conversation* next; //pointer to next in list
-    Conversation* previous; //pointer to previous in list
-
-    private:
-    string sub; //subject of emails
-    int size; //size of email list
-    emailNode* convoHead; //declare head pointer
-};
-
-class Inbox{ // initialize inbox class
-    public:
-    Inbox(); // constructor
-    Inbox(Inbox& otherInbox); //copy constructor
-    ~Inbox(); // destructor
-    void insertEmail(string newSubject, emailNode* newEmail); // initialize functions needed with this class
-    void deleteConversation(string deleteSubject);
-    void displayInbox();
-
-    private:
-    Conversation* searchConvo(string newSubject); //searches list for given subject
-    Conversation* inboxHead; //pointer to front of list
-    Conversation* inboxTail; //pointer to end of list
-};
-
-emailNode::emailNode(string newTo, string newFrom, string newMessage){
-    to = newTo;
-    from = newFrom;
-    message = newMessage;
-    next = NULL;
-    previous = NULL;
-}
-
-Conversation::Conversation(string subject, emailNode* email){ //Conversation constructor
-    sub = subject;
-    convoHead = email;
-    convoHead->next = NULL;
-    convoHead->previous = NULL;
-    size = 1;
-}
-
-Conversation::Conversation(Conversation& otherConvo){//Conversation Copy constructor
-    this->next = otherConvo.next;
-    this->previous = otherConvo.previous;
-    this->sub = otherConvo.sub;
-    this->size = otherConvo.size;
-    this->convoHead = otherConvo.convoHead;
-}
-
-Conversation::~Conversation(){ //Conversation destructor
-    emailNode* temp = convoHead;
-    emailNode* temp2 = convoHead;
-    while(temp != NULL){
-        temp2 = temp;
-        temp = temp->previous;
-        delete temp2;
-    }
-}
-
-void Conversation::addEmail(emailNode* email){ // definition of add emailNode
-    email->previous = convoHead; //adds email to front of list
-    convoHead = email;
-    convoHead->next = NULL;
-    size++;
-}
-
-Inbox::Inbox(){ // constructor initializes head/size
-    inboxHead = NULL;
-    inboxTail = NULL;
-}
-
-Inbox::Inbox(Inbox& otherInbox){ //inbox copy constructor
-    inboxHead = otherInbox.inboxHead;
-    inboxTail = otherInbox.inboxTail;
-}
-
-Inbox::~Inbox(){ //inbox destructor
-    Conversation* temp = inboxHead;
-    Conversation* temp2 = inboxHead;
-    while(temp != NULL){
-        temp2 = temp;
-        temp = temp->previous;
-        delete temp2;
-    }
-}
-
-Conversation* Inbox::searchConvo(string newSubject){ // takes in subject and returns a pointer to conversation (or null if subject not found)
-    Conversation* temp = inboxHead;
-    while(temp != NULL){
-        if(temp->getSub() == newSubject){
-            return temp; //return subject if it already exists
-        }
-    }
-    return NULL; //return null if subject does not exist
-}
-
-void Inbox::displayInbox(){ // prints the Inbox info
-    if(inboxHead != NULL){
-        Conversation* current = inboxHead;
-        int listsize = 0;
-        while(current != NULL){
-            listsize += current->getSize();
-            current = current->previous;
-        }
-        cout << "Total number of emails in Inbox: " << listsize << endl;
-        current = inboxHead;
-        while(current != NULL){
-            cout << current->getSub() << ": " << current->getSize() << endl;
-            current = current->previous;
-        }
-    }
-}
-
-void Inbox::insertemailNode(string newSubject, emailNode* newEmail){ // inserts email
-    Conversation* temp = searchConvo(newSubject); //finds if subject already exists
-    if(temp != NULL){
-        temp->addEmail(newEmail);
-        if(temp->next != NULL){
-            if(temp->previous != NULL){
-                (temp->previous)->next = temp->next;
-            }
-            else{
-                this->inboxTail = temp->previous;
-            }
-            (temp->next)->previous = temp->previous;
-            temp->previous = this->inboxHead;
-            temp->next = NULL;
-            (this->inboxHead)->next = temp;
-            this->inboxHead = temp;
-        }
-    }
-    else{
-        temp = new Conversation(newSubject, newEmail);
-        if(this->inboxHead != NULL){
-            (this->inboxHead)->next = temp;
-        }
-        temp->previous = this->inboxHead;
-        temp->next = NULL;
-        this->inboxHead = temp;
-        if(this->inboxTail == NULL){
-            this->inboxTail = temp;
-        }
-    }
-}
-
-void Inbox::deleteConversation(string deleteSubject){ // deletes a conversation (after checking if one exists)
-    Conversation* temp = searchConvo(deleteSubject);
-    if(temp != NULL){
-        Conversation* next = temp->next;
-        Conversation* previous = temp->previous;
-        next->previous = previous;
-        previous->next = next;
-        delete temp;
-    }
-}
-
-string Conversation::getSub(){return sub;}
-int Conversation::getSize(){return size;}
-//string emailNode::getTo(){return to;}
-//string emailNode::getFrom(){return from;}
-//string emailNode::getMessage(){return message;}
-
-int main() { // prompts user for input and calls the appropriate functions based on user response
-    string subj = "";
-    Inbox inbox; //create new Inbox object
-    cout << endl << "Welcome to your inbox!" << endl;
-    cout << "Enter each email subject, pressing enter after each one." << endl;
-    cout << "To terminate, enter 'done', and your inbox will be displayed." << endl;
-    while(getline(cin, subj) && subj != "done"){
-        cout << "The subject is: " << subj << endl;
-        inbox.insertEmail(subj, new emailNode("to", "from", "message"));
-    }
-    inbox.displayInbox();
-
-    return 0;
-} // end program*/
+// end of program

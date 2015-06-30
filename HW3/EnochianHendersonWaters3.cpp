@@ -11,7 +11,9 @@ Course number: CS2028
 Instructor: Anca Ralescu
 TA: Suryadip Chakraborty
 Abstract: Assignment 3 main.cpp uses doubly-linked lists to imitate an email
-inbox by using the functions insertEmail, deleteConversation, and displayInbox to do add emails to the inbox, add emails to communications of the same subject, and print the inbox to the user.
+    inbox by using the functions insertEmail, deleteConversation, and displayInbox
+    to add emails to the inbox, add emails to communications of the same subject,
+    and print the inbox to the user.
 Preconditions: None
 Postconditions: None
 Credit: Referred to Dr. Talaga's examples from CS2
@@ -90,7 +92,7 @@ class Inbox {
     void insertEmail(emailNode* email, string subject);
 
     // this function deletes a communication and returns true if successful, false otherwise
-    bool deleteConversation(string subject);
+    void deleteConversation(string subject);
 
     // this function displays the inbox in order and lists the number of emails
     void displayInbox();
@@ -214,7 +216,7 @@ void Inbox::insertEmail(emailNode* email, string subject) { // takes in an email
     }
 }
 
-bool Inbox::deleteConversation(string subject) { // attempts to remove a conversation by subject, returns true if successful and false if not
+void Inbox::deleteConversation(string subject) { // attempts to remove a conversation by subject, returns true if successful and false if not
     Conversation* temp = searchConvo(subject); // look through inbox for desired subject
     if (temp != NULL) { // if subject is found, delete the conversation and return true
         Conversation* next = temp->next;
@@ -223,12 +225,8 @@ bool Inbox::deleteConversation(string subject) { // attempts to remove a convers
         next->previous = previous;
         previous->next = next;
 
-        delete temp;
-
-        return true;
+        delete temp;;
     }
-    // return false if no such communication was found (can't delete what isn't there)
-    return false;
 }
 
 void Inbox::displayInbox() { // print function that displays the inbox to the user

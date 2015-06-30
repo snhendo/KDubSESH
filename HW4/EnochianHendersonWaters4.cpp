@@ -7,7 +7,7 @@ TA: Suryadip Chakraborty
 Abstract: This program prompts for information and then sorts the given list given its size using MergeSort, QuickSort, BubbleSort, and InsertionSort via a HybridSort function.
 Preconditions: This program sorts integers only.
 Postconditions: None
-Credit: Referred to Dr. Talaga's examples from CS2
+Credit: Referred to Dr. Talaga's examples from CS2, consulted the web for various sorts
 */
 
 #include <iostream>
@@ -18,82 +18,44 @@ Credit: Referred to Dr. Talaga's examples from CS2
 using namespace std;
 
 // insertion sort from http://mycodinglab.com/insertion-sort-algorithm/
-void insertionSort(vector<int> &v, int &comparisons){
-    int i, j, tmp;
-    for (i = 1; i < v.size(); i++) {
-        j = i;
-        while (j > 0 && v[j - 1] > v[j]) {
-            tmp = v[j];
-            v[j] = v[j - 1];
-            v[j - 1] = tmp;
-            j--;
-            comparisons++;
+void insertionSort(vector<int> &v, int &comparisons){ // insertionSort passes in a vector and the number of comparisons used by the sorting method by reference
+    int i, j, tmp; // initialize i, j, and a temporary variable
+    for (i = 1; i < v.size(); i++) { // iterates through the vector
+        j = i; // set j equal to i
+        while (j > 0 && v[j - 1] > v[j]) { // as long as j is greater than zero and the previous element is greater than the current element, swap and decrement the number of comparisons
+            tmp = v[j]; // temp = current element
+            v[j] = v[j - 1]; // current element = previous element
+            v[j - 1] = tmp; // previous element = temp
+            j--; // decrement j
+            comparisons++; // decrement comparisons (value)
         }
     }
 }
 
 // quick sort from http://www.csepedia.com/Quick_Sort.html
-int Partition(vector<int> &a, int beg, int end) {         //Function to Find Pivot Point
-    int p=beg, pivot=a[beg], loc;
-    for(loc=beg+1;loc<=end;loc++) {
-        if(pivot>a[loc]) {
-            a[p]=a[loc];
-            a[loc]=a[p+1];
-            a[p+1]=pivot;
-            p=p+1;
+int Partition(vector<int> &a, int beg, int end) {         //Function to Find Pivot Point, passes a vector in by reference, also takes beginning and ending variables
+    int p=beg, pivot=a[beg], loc; // initialize variables and set them to values as needed
+    for(loc=beg+1;loc<=end;loc++) { // start loc at beginning+1 and increment through to the end
+        if(pivot>a[loc]) { // if the pivot is greater than the value at that location within the vector, swap them
+            a[p]=a[loc]; // a[p] = value at the loc of a
+            a[loc]=a[p+1]; // the value at loc of a = the value at the p+1 element of a
+            a[p+1]=pivot; // the element at p+1 of a = pivot
+            p=p+1; // increment p
         }
     }
-    return p;
+    return p; // return the value of p
 }
 
 
-void quickSort(vector<int> &a, int beg, int end, int &comparisons)
+void quickSort(vector<int> &a, int beg, int end, int &comparisons) // passes in a vector and a number of comparisons by reference, as well as beginning and ending variables
 {
-    comparisons++;
-    if(beg<end) {
+    comparisons++; // increment comparisons
+    if(beg<end) { // if the beginning value is greater than the end, recursively call itself to sort the vector after finding a pivot
         int p=Partition(a,beg,end);                       //Calling Procedure to Find Pivot
         quickSort(a,beg,p-1, comparisons);                             //Calls Itself (Recursion)
         quickSort(a,p+1,end, comparisons);			              //Calls Itself (Recursion)
     }
 }
-
-// quick sort from Dr. Talaga's examples from CS2
-/*void quickSort(vector<int> &v, int start, int end){
-  // sort the elements between (and including) start and end
-  if(end-start < 1){ // 0 or 1
-    return;
-  }
-  int so = start;
-  int se = end;
-  // put pivot at start location
-  //int pivot = start;
-  //int pv = v[pivot];
-  int pivot = (rand() % (end-start +1)) + start;
-  int pv = v[pivot];
-  while(end-start >= 1){
-    // 4 cases
-    if(v[start] == pv && v[end] == pv){
-      start++;
-    }else if(v[start] >= pv && v[end] <= pv){ // switch
-      int temp = v[start];
-      v[start] = v[end];
-      v[end] = temp;
-      // don't change start or end
-    }else if(v[end] > pv){
-      end--;
-    }else if(v[start] < pv){ // low OK
-      start++;
-    }else{
-      cout << "Well crap\n";
-      return;
-    }
-  }
-  //cout << "mid: " << v[start] << endl;
-  quickSort(v,so, start-1);
-  quickSort(v,end+1,se);
-  //cout << "s: " << start << " e: " << end << endl;
-}*/
-
 
 // bubble sort from Dr. Talaga's examples from CS2
 void bubbleSort(vector<int> &numbers, int &comparisons){ // bubbleSort takes a vector of numbers
@@ -156,27 +118,27 @@ vector<int> merge(vector<int> &left, vector<int> &right){ // merge takes in the 
     v = merge(left,right); // merges the left and right vectors together to complete the sorting process
   }
 
-void hybridSort (vector<int> &v, string Large, string Small, int T, int &comparisons, string &sortType) {
-    if (v.size() > T) {
-        if (Large == "MergeSort") {
+void hybridSort (vector<int> &v, string Large, string Small, int T, int &comparisons, string &sortType) { // hybridSort takes in a vector, number of comparisons, and a sortType by reference, on top of taking in a Large, Small, and T (efficiency of the sorts -- i.e. large is efficient for large lists, small is efficient for small lists, T is the threshhold at which the list considered to require the large or small sort algorithm)
+    if (v.size() > T) { // if the size is greater than T, sort depending on what large is decided to be and then sort accordingly
+        if (Large == "MergeSort") { // sorts using mergesort
             sortType = "Merge Sort";
             mergeSort(v, comparisons);
-        } else {
+        } else { // sorts using quicksort
             sortType = "Quick Sort";
             quickSort(v, 0, v.size(), comparisons);
         }
-    } else {
-        if (Small == "BubbleSort") {
+    } else { // otherwise size < T, so we sort depending on what small is decided to be and the vector is sorted accordingly
+        if (Small == "BubbleSort") { // sort via bubblesort
             sortType = "Bubble Sort";
             bubbleSort(v, comparisons);
-        } else {
+        } else { // sort via insertion sort
             sortType = "Insertion Sort";
             insertionSort(v, comparisons);
         }
     }
 }
 
-void listDisplayer(vector<int> &v) {
+void listDisplayer(vector<int> &v) { // print function
     cout << "{";
     for (int i = 0; i < v.size(); i++) {
         if (i != 0){
@@ -189,30 +151,30 @@ void listDisplayer(vector<int> &v) {
 
 int main () {
     cout << "Welcome to Sort! Follow the prompts to produce a sorted list." << endl;
-    char restart = 'y';
+    char restart = 'y'; // automatically set to yes (can be changed by user at the end of the program)
     while (restart == 'y') {
-        cout << "At what threshold should this be considered a large list? Please choose a value between 8 and 16." << endl;
-        int sortThreshold = 0;
-        cin >> sortThreshold;
-        cout << "What is the size of your list?" << endl;
+        cout << "At what threshold should this be considered a large list? Please choose a value between 8 and 16." << endl; // prompts user for a value to determine what a large list is
+        int sortThreshold = 0; // initialize sortThreshold
+        cin >> sortThreshold; // store user input in the variable
+        cout << "What is the size of your list?" << endl; // prompts for size of list
         int listSize = 0;
-        cin >> listSize;
-        char listGeneration = 'm';
-        char listDisplay = 'y';
-        char listComparisonsDisplay = 'y';
-        if (listSize <= 100) {
-            cout << "Would you like to enter it manually (m) or have it randomly generated (r)?" << endl;
-            cin >> listGeneration;
-            cout << "Would you like the list to be displayed? Yes (y) or No (n)?" << endl;
-            cin >> listDisplay;
-        } else {
+        cin >> listSize; // stores list
+        char listGeneration = 'm'; // automatically set the list to be maunally entered (user can change if desired)
+        char listDisplay = 'y'; // automatically set the list to be printed (user can change if desired)
+        char listComparisonsDisplay = 'y'; // automatically sets number of comparisons to be displayed (user can change if desired)
+        if (listSize <= 100) { // if list size is less than or equal to 100, user can enter the list manually if they so choose
+            cout << "Would you like to enter it manually (m) or have it randomly generated (r)?" << endl; // prompt user if they want to manually enter the list or randomly generate a list
+            cin >> listGeneration; // store response
+            cout << "Would you like the list to be displayed? Yes (y) or No (n)?" << endl; // prompt user if they want to print the list
+            cin >> listDisplay; // store response
+        } else { // if list size is greater than 100, automatically generate a random list and don't display the list
             listGeneration = 'r';
             listDisplay = 'n';
         }
-        cout << "Would you like the comparisons counts to be displayed? Yes (y) or No (n)?" << endl;
-        cin >> listComparisonsDisplay;
-        vector<int> listValues;
-        if (listGeneration == 'm') {
+        cout << "Would you like the comparisons counts to be displayed? Yes (y) or No (n)?" << endl; // prompt user if they want to display the number of comparisons
+        cin >> listComparisonsDisplay; //store response
+        vector<int> listValues; // initialize vector
+        if (listGeneration == 'm') { // if user wants to enter list manually, ask for each value individually and store in the vector
             cout << "Enter one value at a time. Press return before entering another value." << endl;
             int temp = 0;
             for (int i = 0; i < listSize; i++) {
@@ -220,33 +182,33 @@ int main () {
                 cin >> temp;
                 listValues.push_back(temp);
             }
-        } else if (listGeneration == 'r') {
+        } else if (listGeneration == 'r') { // if user wants list randomly generated, store random integers in the vector
             srand(time(0));
             for (int i = 0; i < listSize; i++) {
                 int randValue = rand() % (listSize * 10);
                 listValues.push_back(randValue);
             }
         }
-        if (listDisplay == 'y') {
+        if (listDisplay == 'y') { // if the user wants the list to be display, print out the original list
             cout << "Original List: ";
             listDisplayer(listValues);
         }
-        vector<int> result = listValues;
-        int comparisons = 0;
-        string sortType="";
-        hybridSort(result, "MergeSort", "BubbleSort", sortThreshold, comparisons, sortType);
-        if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
+        vector<int> result = listValues; //initialize result to be the vector
+        int comparisons = 0; // intialize the number of comparisons to 0 (we haven't done anything yet)
+        string sortType=""; // intialize the type of sort
+        hybridSort(result, "MergeSort", "BubbleSort", sortThreshold, comparisons, sortType); // decide what sort to do between mergesort and bubblesort
+        if (listDisplay == 'y' || listComparisonsDisplay == 'y') { // if user wants to display the list or the comparisons, print out the the value of sortType
             cout << sortType << endl;
         }
-        if (listDisplay == 'y') {
+        if (listDisplay == 'y') { // if user wants to display the list, call the print function
             listDisplayer(result);
         }
-        if (listComparisonsDisplay == 'y'){
+        if (listComparisonsDisplay == 'y'){ // if user wants to display the comparisons, print out the comparisons
             cout << "Comparisons: " << comparisons << endl;
         }
-        result = listValues;
-        comparisons = 0;
-        hybridSort(result, "MergeSort", "InsertionSort", sortThreshold, comparisons, sortType);
+        result = listValues; // reinitialize result to listValues
+        comparisons = 0; // reinitialize comparsions to 0
+        hybridSort(result, "MergeSort", "InsertionSort", sortThreshold, comparisons, sortType); // decide what sort to do between mergesort and insertionsort
         if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
             cout << sortType << endl;
         }
@@ -258,7 +220,7 @@ int main () {
         }
         result = listValues; // avoiding an error
         comparisons = 0;
-        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons, sortType);
+        hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons, sortType); // decide what sort to do between quicksort and bubblesort
         result = listValues;
         comparisons = 0;
         hybridSort(result, "QuickSort", "BubbleSort", sortThreshold, comparisons, sortType);
@@ -274,7 +236,7 @@ int main () {
         }
         result = listValues;
         comparisons = 0;
-        hybridSort(result, "QuickSort", "InsertionSort", sortThreshold, comparisons, sortType);
+        hybridSort(result, "QuickSort", "InsertionSort", sortThreshold, comparisons, sortType); // decide what sort to do between quicksort and insertion sort
         if (listDisplay == 'y' || listComparisonsDisplay == 'y') {
             cout << sortType << endl;
         }
@@ -284,7 +246,7 @@ int main () {
         if (listComparisonsDisplay == 'y'){
             cout << "Comparisons: " << comparisons << endl;
         }
-        cout << "Would you like to sort another list? (y/n)" << endl;
-        cin >> restart;
+        cout << "Would you like to sort another list? (y/n)" << endl; // ask the user if they want to sort another list
+        cin >> restart; // store response
     }
 }

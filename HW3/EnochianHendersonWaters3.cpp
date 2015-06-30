@@ -26,19 +26,14 @@ Credit: Referred to Dr. Talaga's examples from CS2
 using namespace std;
 
 
-// emailNode class
 class emailNode {
     public:
-    // constructor
-    emailNode(string to, string from, string message);
-    // Getters
-    string getTo();
-    string getFrom();
-    string getMessage();
-
-    // pointers to the next and previous emails
-    emailNode* next;
-    emailNode* previous;
+    emailNode(string to, string from, string message);//constructor
+    string getTo(); //returns to
+    string getFrom(); //returns from
+    string getMessage(); //returns message
+    emailNode* next; //pointer to next email
+    emailNode* previous; //pointer to previous email
 
     private:
     string to;
@@ -46,69 +41,39 @@ class emailNode {
     string message;
 };
 
-// Conversation class
 class Conversation {
     public:
-    // pointers to next and previous communications
-    Conversation* next;
-    Conversation* previous;
-
-    // constructor
-    Conversation(string subject, emailNode* email);
-
-    // copy constructor
-    Conversation(Conversation& other);
-
-    // This function adds an email at the head of the list
-    void newEmail(emailNode* email);
-
-    // Getters
-    string getSub();
-    int getSize();
-
-     // Destructor
-    ~Conversation();
+    Conversation* next; //pointer to next conversation
+    Conversation* previous; //pointer to previous conversation
+    Conversation(string subject, emailNode* email);//constructor
+    Conversation(Conversation& other); //copy constructor
+    void addEmail(emailNode* email);  //adds new email to front of list
+    string getSub(); //returns subject
+    int getSize(); //returns list size
+    ~Conversation(); //destructor
 
     private:
-    string subject;
-    int size;
-
-    // pointer to head of linked list of emails
-    emailNode* emailHead;
+    string subject; //inputted subject of new email
+    int size; //number of emails in list
+    emailNode* emailHead; //pointer to front of email list
 };
 
-// Inbox class
 class Inbox {
     public:
-    // constructor
-    Inbox();
-
-    // copy constructor
-    Inbox(Inbox& other);
-
-    // This function adds a new email to its corresponding communication,
-    // or creates a new communication if one does not exist.
-    // Most recently updated communications are moved to the top of the inbox.
-    void insertEmail(emailNode* email, string subject);
-
-    // this function deletes a communication and returns true if successful, false otherwise
-    void deleteConversation(string subject);
-
-    // this function displays the inbox in order and lists the number of emails
-    void displayInbox();
-
-    ~Inbox();
+    Inbox(); //constructor
+    Inbox(Inbox& other);//copy constructor
+    void insertEmail(emailNode* email, string subject);// inserts email into email list
+    void deleteConversation(string subject); //deletes conversation with a given subject
+    void displayInbox(); //prints current inbox to user
+    ~Inbox();//destructor
 
     private:
-    // this function returns a pointer to the communication with the given subject
-    Conversation* searchConvo(string subject);
-
-    // pointers to the head and tail of the list of communications
-    Conversation* inboxHead;
-    Conversation* inboxTail;
+    Conversation* searchConvo(string subject); //searches list for given subject
+    Conversation* inboxHead; //pointer to head of list
+    Conversation* inboxTail; //pointer to tail of list
 };
 
-Inbox::Inbox() { // constructor to initialize the head and tail of the inbox to NULL (inbox is currently empty)
+Inbox::Inbox() { // inbox constructor
     inboxHead = NULL;
     inboxTail = NULL;
 }
@@ -121,7 +86,7 @@ emailNode::emailNode(string to, string from, string message) { // define an emai
         this->previous = NULL;
 }
 
-//Getters for the Email class (emailNode)
+//Getters for the emailNode class
 string emailNode::getTo() { return to; }
 string emailNode::getFrom() { return from; }
 string emailNode::getMessage() { return message; }
@@ -142,7 +107,7 @@ Conversation::Conversation(Conversation& other) { // copy constructor for Conver
         this->emailHead = other.emailHead;
 }
 
-void Conversation::newEmail(emailNode* email) { // new email function takes in a pointer to an email and adds it to the Inbox
+void Conversation::addEmail(emailNode* email) { // new email function takes in a pointer to an email and adds it to the Inbox
         email->previous = emailHead;
         emailHead = email;
         emailHead->next = NULL;
@@ -184,7 +149,7 @@ void Inbox::insertEmail(emailNode* email, string subject) { // takes in an email
     // search for a communication with the given subject to place the email in
     Conversation* temp = searchConvo(subject); // look for the subject that is already in the inbox
     if (temp != NULL) { // if a communication already exists, add the email to the communication
-        temp->newEmail(email);
+        temp->addEmail(email);
         if (temp->next != NULL) {// if not already there, move the communication to the top of the inbox
             if (temp->previous != NULL) {
                 (temp->previous)->next = temp->next;
@@ -200,10 +165,10 @@ void Inbox::insertEmail(emailNode* email, string subject) { // takes in an email
         }
     }
     else {
-        // create a new communication if one does not exist
+        // create a new conversation if one does not exist
         temp = new Conversation(subject, email);
 
-        // place the new communication at the top of the inbox
+        // place the new conversation at the top of the inbox
         if (this->inboxHead != NULL) {
             (this->inboxHead)->next = temp;
         }
@@ -221,10 +186,8 @@ void Inbox::deleteConversation(string subject) { // attempts to remove a convers
     if (temp != NULL) { // if subject is found, delete the conversation and return true
         Conversation* next = temp->next;
         Conversation* previous = temp->previous;
-
         next->previous = previous;
         previous->next = next;
-
         delete temp;;
     }
 }
@@ -232,23 +195,19 @@ void Inbox::deleteConversation(string subject) { // attempts to remove a convers
 void Inbox::displayInbox() { // print function that displays the inbox to the user
     if (inboxHead != NULL) { // as long as the list isn't empty, start at the top of the inbox
         Conversation* current = inboxHead;
-
         // get total number of emails
         int size = 0;
         while (current != NULL) {
             size += current->getSize();
             current = current->previous;
         }
-
         cout << "Total number of emails in inbox: " << size << endl; // prints number of emails in the inbox to the user
-
         // list communications and the number of emails in each one
         current = inboxHead;
         while (current != NULL) {
             cout << current->getSub() << " - " << current->getSize() << endl; // prints subjects and how many emails exist with that same subject
             current = current->previous;
         }
-        cout << endl;
     }
 }
 
@@ -268,15 +227,11 @@ int main() {
     cout << endl << "Welcome to your inbox!" << endl;
     cout << "Enter an email subject, then hit enter after each one. " << endl;
     cout << "To terminate, enter 'done' followed by another enter." << endl << endl;
-
     // get subjects from user
     while (getline(cin, subject) && subject != "done") { // as long as user doesn't enter done and keeps entering subjects, we will add the emails to the inbox
         inbox.insertEmail(new emailNode("to", "from", "message"), subject);
-
     }
-    //display inbox
     inbox.displayInbox(); // when user is done, we will display the inbox
-
     return 0;
 }
 

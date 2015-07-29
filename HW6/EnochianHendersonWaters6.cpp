@@ -15,9 +15,12 @@ Credit: Referred to Dr. Talaga's examples from CS2, consulted the web for variou
 #include <vector>
 #include <stdlib.h>
 #include <cmath>
+#include <ctime>
 
 using namespace std;
 
+//DECLARE TABLE SIZE
+const int N = 23;
 
 class HashEntry{
     private:
@@ -32,9 +35,6 @@ class HashEntry{
         int getKey(){ return key; }
         int getValue(){ return value; }
 };
-
-//DECLARE TABLE SIZE
-const int N = 23;
 
 class HashTable{
     private:
@@ -82,8 +82,15 @@ class HashTable{
     }
 };
 
+void generateRandomNumbers(int (&array)[N]) {
+    for (int i == 0; i < N; i++) {
+        int value = rand() % 50;
+        array[i] = value;
+    }
+}
 
 int main () {
+    srand(time(0)); //will move whenever we incorporate the for loop
     cout << "Assignment #6" << endl << endl;
     cout << "Select your collision resolution scheme:\n(a) Double Hashing\n(b) Quadritic\n(c) Chaining within the Hash Table\n";
     char* collisionResolutionSelection;

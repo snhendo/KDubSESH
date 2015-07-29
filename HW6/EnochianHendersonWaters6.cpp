@@ -82,24 +82,59 @@ class HashTable{
     }
 };
 
-void generateRandomNumbers(int (&array)[N]) {
-    for (int i == 0; i < N; i++) {
-        int value = rand() % 50;
-        array[i] = value;
-    }
-}
+
 
 int main () {
     srand(time(0)); //will move whenever we incorporate the for loop
+    int bucket[N];
+    for (int a = 0; a < N; a++){
+        bucket[a] = -1; //initialize bucket array
+    }
     cout << "Assignment #6" << endl << endl;
     cout << "Select your collision resolution scheme:\n(a) Double Hashing\n(b) Quadritic\n(c) Chaining within the Hash Table\n";
-    char* collisionResolutionSelection;
-    cin >> collisionResolutionSelection;
-    if (*collisionResolutionSelection < 'a' || *collisionResolutionSelection > 'c') {
-        return 0;
-    }
+    char* choice;
+    cin >> choice;
     cout << "What load ratio would you like to use? Enter a value between 0 and 1.0" << endl;
     float loadRatio = 0.0;
     cin >> loadRatio;
+    const int keyListSize = ceil(loadRatio*N);
+    int keyList[keyListSize];
+    for (int i = 0; i < keyListSize; i++) {
+        int value = rand() % 50;
+        keyList[i] = value;
+    }
+
+    for(int j = 0; j < N; j++){
+        int h1 = keyList[j] % N;
+        if(bucket[h1] < 0){
+            bucket[h1] = keyList[j];
+        }
+        else{
+            if (*choice == 'a'){ //double hashing
+                int q = 19;
+                int h2 = q - (keyList[j] % q);
+                for (int n = 0; n < N; n++){
+                    int location = (h1 + (h2*n)) % N;
+                    if (bucket[location] < 0){
+                        bucket[location] = keyList[j];
+                        break;
+                    }
+                }
+                cout << "Bucket is full. Cannot add more keys." << endl;
+            }
+            else if (*choice == 'b'){
+                //quadratic probing
+            }
+            else if (*choice == 'c'){
+                //chaining
+            }
+            else{
+                cout << "Program ended." << endl;
+                return 0;
+            }
+        }
+    }
+
+
     return 0;
 }

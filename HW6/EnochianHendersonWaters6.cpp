@@ -94,10 +94,13 @@ int main () {
     for(int b = 0; b < N; b++){
         bucket2[b] = NULL;
     }
+
+
+    char choice;
     cout << "Assignment #6" << endl << endl;
-    cout << "Select your collision resolution scheme:\n(a) Double Hashing\n(b) Quadritic\n(c) Chaining within the Hash Table\n";
-    char* choice;
+    cout << "Select your collision resolution scheme:\n(a) Double Hashing\n(b) Quadratic\n(c) Chaining within the Hash Table\n";
     cin >> choice;
+    cout << "Choice: " << choice << endl;
     cout << "What load ratio would you like to use? Enter a value between 0 and 1.0" << endl;
     float loadRatio = 0.0;
     cin >> loadRatio;
@@ -107,16 +110,21 @@ int main () {
         int value = rand() % 50;
         keyList[i] = value;
     }
+    cout << "[ ";
+    for (int t = 0; t < keyListSize; t++){
+        cout << keyList[t] << ", ";
+    }
+    cout << "]" << endl;
 
     for(int j = 0; j < keyListSize; j++){
         int h1 = keyList[j] % N;
-        cout << h1 << endl;
-        if((bucket[h1] < 0) && (bucket2[h1] == NULL)){
+        cout << "This should go in entry: " << h1 << endl;
+        if((bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){
             bucket[h1] = keyList[j];
-            bucket2[h1]->push_back(keyList[j]);
+            //bucket2[h1]->push_back(keyList[j]);
         }
         else{
-            if (*choice == 'a'){ //double hashing
+            if (choice == 'a'){ //double hashing
                 int q = 19;
                 int h2 = q - (keyList[j] % q);
                 for (int n = 0; n < N; n++){
@@ -126,9 +134,8 @@ int main () {
                         break;
                     }
                 }
-                cout << "Bucket is full. Cannot add more keys." << endl;
             }
-            else if (*choice == 'b'){//quadratic probing
+            else if (choice == 'b'){//quadratic probing
                 for(int x = 0; x < N; x++){
                     int location = (h1 + (int)pow(x,2)) % N;
                     if (bucket[location] < 0){
@@ -137,8 +144,8 @@ int main () {
                     }
                 }
             }
-            else if (*choice == 'c'){//chaining
-                bucket2[h1]->push_back(keyList[j]);
+            else if (choice == 'c'){//chaining
+                //bucket2[h1]->push_back(keyList[j]);
             }
             else{
                 cout << "Program ended." << endl;
@@ -147,6 +154,17 @@ int main () {
         }
     }
 
+
+    cout << "[";
+    for(int z = 0; z < N; z++){
+        if (bucket[z] == -1){
+            cout << " _, ";
+        }
+        else{
+        cout << bucket[z] << ", ";
+        }
+    }
+    cout << "]" << endl;
 
     return 0;
 }

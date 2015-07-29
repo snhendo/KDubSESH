@@ -122,8 +122,14 @@ int main () {
                 }
                 cout << "Bucket is full. Cannot add more keys." << endl;
             }
-            else if (*choice == 'b'){
-                //quadratic probing
+            else if (*choice == 'b'){//quadratic probing
+                for(int x = 0; x < N; x++){
+                    int location = (h1 + (int)pow(x,2)) % N;
+                    if (bucket[location] < 0){
+                        bucket[location] = keyList[j];
+                        break;
+                    }
+                }
             }
             else if (*choice == 'c'){
                 //chaining

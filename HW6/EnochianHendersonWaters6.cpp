@@ -90,6 +90,10 @@ int main () {
     for (int a = 0; a < N; a++){
         bucket[a] = -1; //initialize bucket array
     }
+    vector<int>* bucket2[N];
+    for(int b = 0; b < N; b++){
+        bucket2[b] = NULL;
+    }
     cout << "Assignment #6" << endl << endl;
     cout << "Select your collision resolution scheme:\n(a) Double Hashing\n(b) Quadritic\n(c) Chaining within the Hash Table\n";
     char* choice;
@@ -104,10 +108,12 @@ int main () {
         keyList[i] = value;
     }
 
-    for(int j = 0; j < N; j++){
+    for(int j = 0; j < keyListSize; j++){
         int h1 = keyList[j] % N;
-        if(bucket[h1] < 0){
+        cout << h1 << endl;
+        if((bucket[h1] < 0) && (bucket2[h1] == NULL)){
             bucket[h1] = keyList[j];
+            bucket2[h1]->push_back(keyList[j]);
         }
         else{
             if (*choice == 'a'){ //double hashing
@@ -131,8 +137,8 @@ int main () {
                     }
                 }
             }
-            else if (*choice == 'c'){
-                //chaining
+            else if (*choice == 'c'){//chaining
+                bucket2[h1]->push_back(keyList[j]);
             }
             else{
                 cout << "Program ended." << endl;

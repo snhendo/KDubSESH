@@ -167,7 +167,7 @@ int main () {
 
     // Prints out the bucket array for testing purposes to make sure our collision resolution methods work
     cout << "[";
-    if (choice =! 'c'){
+    if (choice != 'c'){
         for(int z = 0; z < N; z++){
             if (bucket[z] == -1){
                 cout << " _, ";

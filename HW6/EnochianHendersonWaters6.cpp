@@ -218,7 +218,7 @@ int main () {
         for(int i = 0; i < N; i++){
             for(int j = 0; j < bucket3[i].size(); j++){
                 if(bucket3[i][j] == testKey){
-                    uniqueTest = false;
+                    uniqueTest = true;
                 }
             }
         }

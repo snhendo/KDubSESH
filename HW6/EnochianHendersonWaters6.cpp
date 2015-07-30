@@ -113,14 +113,6 @@ int main () {
     //    keyList[i] = value;
     //}
 
-    // This segment is just for testing purposes. It prints out the keyList array.//
-    cout << "[ ";
-    for (int t = 0; t < keyListSize; t++){
-        cout << keyList[t] << ", ";
-    }
-    cout << "]" << endl;
-    // End of testing segment //
-
     // for loop that steps through each element in keyList array and tries to put it in a bucket
     // if the bucket is already filled with an entry, then we will use 1 of 3 collision-resolution methods
     // as defined by the user earlier in the code (see lines 101-102)
@@ -177,6 +169,14 @@ int main () {
             cout << "Duplicate random key generated. Generating new random key." << endl;
         }
     }
+
+    // This segment is just for testing purposes. It prints out the keyList array.//
+    cout << "KeyList: [ ";
+    for (int t = 0; t < keyListSize; t++){
+        cout << keyList[t] << ", ";
+    }
+    cout << "]" << endl;
+    // End of testing segment //
 
     // Prints out the bucket array for testing purposes to make sure our collision resolution methods work
     cout << "[";

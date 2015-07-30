@@ -95,7 +95,7 @@ int main () {
         bucket2[b] = NULL;
     }
 
-    vector<vector<int> bucket3;
+    vector<vector<int>> bucket3;
     bucket3.resize(N,vector<int>(1,-1));
 
 

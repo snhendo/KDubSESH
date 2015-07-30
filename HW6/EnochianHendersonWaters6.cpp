@@ -106,11 +106,12 @@ int main () {
     float loadRatio = 0.0;                      // initialize loadRatio
     cin >> loadRatio;                           // store user's response to the cout statement here
     const int keyListSize = ceil(loadRatio*N);  // since the load ratio is a percentage (load ratio = n/N), if we multiply N by the percentage we will acquire the same value
+    int keysNeeded = keyListSize;
     int keyList[keyListSize];                   // initialize a keyList array to store the keys that will be used
-    for (int i = 0; i < keyListSize; i++) {     // for each entry in keyList, we will assign a random value between 0 and 50
-        int value = rand() % 50;
-        keyList[i] = value;
-    }
+    //for (int i = 0; i < keyListSize; i++) {     // for each entry in keyList, we will assign a random value between 0 and 50
+    //    int value = rand() % 50;
+    //    keyList[i] = value;
+    //}
 
     // This segment is just for testing purposes. It prints out the keyList array.//
     cout << "[ ";
@@ -124,42 +125,56 @@ int main () {
     // if the bucket is already filled with an entry, then we will use 1 of 3 collision-resolution methods
     // as defined by the user earlier in the code (see lines 101-102)
 
-    //DO WE NEED TO REPLACE SOME OF THIS STUFF WITH THE CLASSES MEMBER FUNCTIONS THAT WE HAVE PREVIOUSLY DEFINED?//
-    for(int j = 0; j < keyListSize; j++){
-        int h1 = keyList[j] % N;                           // creates the hash value (h(k))
-        cout << "This should go in entry: " << h1 << endl; // prints hash value to user (testing)
-        if((choice != 'c' && bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){ // if the bucket is <0 (-1), it is empty and we can put something there
-            bucket[h1] = keyList[j];
-            //bucket2[h1]->push_back(keyList[j]);
-        }
-        else{                                           // otherwise we have to do collision resolution (dependent on user's choice)
-            if (choice == 'a'){                         //double hashing
-                int q = 19;                             // set up an arbitrary (prime) q
-                int h2 = q - (keyList[j] % q);          // calculate h2 (h')
-                for (int n = 0; n < N; n++){            // this represents the j = 0, 1, 2, . . . listed in the book under double hashing
-                    int location = (h1 + (h2*n)) % N;   // calculates a new location
-                    if (bucket[location] < 0){          // if it's empty, put the key in that location
-                        bucket[location] = keyList[j];
-                        break;                          // leave for loop
-                    }                                   // iterates through for loop until an empty bucket is found
-                }
+    while (keysNeeded != 0){
+        int randKey = rand() % 50;
+        bool unique = true;
+        for(int i = 0; i < keyList.size(); i++){
+            if(keyList[i] == randKey){
+                unique = false;
+                break;
             }
-            else if (choice == 'b'){                            // quadratic probing
-                for(int x = 0; x < N; x++){                     // for loop to try to find the empty bucket where we can put the key that caused the collision
-                    int location = (h1 + (int)pow(x,2)) % N;    // generate a new location to check (using the formula provided in textbook -> (h1 + x^2)%N)
-                    if (bucket[location] < 0){                  // if it's empty, add it to that bucket and leave for loop - otherwise, loop to next value for x
-                        bucket[location] = keyList[j];
-                        break;
+        }
+        if (unique){
+            keyList[keysNeeded-1] = randKey;
+            keysNeeded--;
+            int h1 = randKey % N;                           // creates the hash value (h(k))
+            cout << "This should go in entry: " << h1 << endl; // prints hash value to user (testing)
+            if((choice != 'c' && bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){ // if the bucket is <0 (-1), it is empty and we can put something there
+                bucket[h1] = randKey;
+                //bucket2[h1]->push_back(keyList[j]);
+            }
+            else{                                           // otherwise we have to do collision resolution (dependent on user's choice)
+                if (choice == 'a'){                         //double hashing
+                    int q = 19;                             // set up an arbitrary (prime) q
+                    int h2 = q - (randKey % q);          // calculate h2 (h')
+                    for (int n = 0; n < N; n++){            // this represents the j = 0, 1, 2, . . . listed in the book under double hashing
+                        int location = (h1 + (h2*n)) % N;   // calculates a new location
+                        if (bucket[location] < 0){          // if it's empty, put the key in that location
+                            bucket[location] = randKey;
+                            break;                          // leave for loop
+                        }                                   // iterates through for loop until an empty bucket is found
                     }
                 }
+                else if (choice == 'b'){                            // quadratic probing
+                    for(int x = 0; x < N; x++){                     // for loop to try to find the empty bucket where we can put the key that caused the collision
+                        int location = (h1 + (int)pow(x,2)) % N;    // generate a new location to check (using the formula provided in textbook -> (h1 + x^2)%N)
+                        if (bucket[location] < 0){                  // if it's empty, add it to that bucket and leave for loop - otherwise, loop to next value for x
+                            bucket[location] = randKey;
+                            break;
+                        }
+                    }
+                }
+                else if (choice == 'c'){                    //chaining
+                    bucket3[h1].push_back(randKey);      //put original key into corresponding hashvalue vector
+                }
+                else{
+                    cout << "Program ended." << endl;
+                    return 0;
+                }
             }
-            else if (choice == 'c'){                    //chaining
-                bucket3[h1].push_back(keyList[j]);      //put original key into corresponding hashvalue vector
-            }
-            else{
-                cout << "Program ended." << endl;
-                return 0;
-            }
+
+        }else{
+            cout << "Duplicate random key generated. Generating new random key." << endl;
         }
     }
 
@@ -187,6 +202,69 @@ int main () {
         }
     }
     cout << "]" << endl;
+
+    cout << "Please enter a key to check if it is currently in the table: "; //Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
+    int testKey = -1;
+    cin >> testKey;
+    int h1 = testKey % N;                           // creates the hash value (h(k))
+    bool uniqueTest = true;
+    if(choice != 'c'){
+        for (int i = 0; i < bucket.size(); i++){
+            if(bucket[h1] > -1){
+                uniqueTest = false;
+            }
+        }
+    }else{
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < bucket3[i].size(); j++){
+                if(bucket3[i][j] == testKey){
+                    uniqueTest = false;
+                }
+            }
+        }
+    }
+    if (uniqueTest){
+        cout << "It's NOT in the table." << endl;
+    }else{
+        cout << "It's in the table." << endl;
+    }
+
+
+        cout << "This should go in entry: " << h1 << endl; // prints hash value to user (testing)
+        if((choice != 'c' && bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){ // if the bucket is <0 (-1), it is empty and we can put something there
+            bucket[h1] = testKey;
+            //bucket2[h1]->push_back(keyList[j]);
+        }
+        else{                                           // otherwise we have to do collision resolution (dependent on user's choice)
+            cout << "A duplicate hash value of this key exists."
+            if (choice == 'a'){                         //double hashing
+                int q = 19;                             // set up an arbitrary (prime) q
+                int h2 = q - (testKey % q);          // calculate h2 (h')
+                for (int n = 0; n < N; n++){            // this represents the j = 0, 1, 2, . . . listed in the book under double hashing
+                    int location = (h1 + (h2*n)) % N;   // calculates a new location
+                    if (bucket[location] < 0){          // if it's empty, put the key in that location
+                        bucket[location] = testKey;
+                        break;                          // leave for loop
+                    }                                   // iterates through for loop until an empty bucket is found
+                }
+            }
+            else if (choice == 'b'){                            // quadratic probing
+                for(int x = 0; x < N; x++){                     // for loop to try to find the empty bucket where we can put the key that caused the collision
+                    int location = (h1 + (int)pow(x,2)) % N;    // generate a new location to check (using the formula provided in textbook -> (h1 + x^2)%N)
+                    if (bucket[location] < 0){                  // if it's empty, add it to that bucket and leave for loop - otherwise, loop to next value for x
+                        bucket[location] = testKey;
+                        break;
+                    }
+                }
+            }
+            else if (choice == 'c'){                    //chaining
+                bucket3[h1].push_back(testKey);      //put original key into corresponding hashvalue vector
+            }
+            else{
+                cout << "Program ended." << endl;
+                return 0;
+            }
+        }
 
     return 0;
     //end of main function

@@ -165,12 +165,25 @@ int main () {
 
     // Prints out the bucket array for testing purposes to make sure our collision resolution methods work
     cout << "[";
-    for(int z = 0; z < N; z++){
-        if (bucket[z] == -1){
-            cout << " _, ";
+    if (choice =! 'c'){
+        for(int z = 0; z < N; z++){
+            if (bucket[z] == -1){
+                cout << " _, ";
+            }
+            else{
+            cout << bucket[z] << ", ";
+            }
         }
-        else{
-        cout << bucket[z] << ", ";
+    }else{
+        for(int z = 0; z < N; z++){
+            if (bucket3[z].size() == 0){
+                cout << " _, ";
+            }else{
+                for(int index = 0; index < bucket3[z].size(); index++){
+                    cout << bucket3[z][index] << ", ";
+                }
+                cout << "; ";
+            }
         }
     }
     cout << "]" << endl;

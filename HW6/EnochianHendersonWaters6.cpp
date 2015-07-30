@@ -95,7 +95,7 @@ int main () {
         bucket2[b] = NULL;
     }
 
-    vector<int><vector<int>> bucket3[N];
+    std::vector<int><std::vector<int>> bucket3[N];
 
 
     char choice;                                // initialize the choice (user input)

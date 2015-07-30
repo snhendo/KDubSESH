@@ -153,12 +153,8 @@ int main () {
                     }
                 }
             }
-            else if (choice == 'c'){                    //chaining - Do we need to use linked lists or is there a way to make the vector work?
-                //bucket2[h1]->push_back(keyList[j]);
-
-                //-----------------------------STILL NEEDS TO BE CODED-----------------------------//
-
-
+            else if (choice == 'c'){                    //chaining
+                bucket3[h1].push_back(keyList[j]);      //put original key into corresponding hashvalue vector
             }
             else{
                 cout << "Program ended." << endl;

@@ -95,7 +95,8 @@ int main () {
         bucket2[b] = NULL;
     }
 
-    vector<vector<int> bucket3[N][0];
+    vector<vector<int> bucket3;
+    bucket3.resize(N,vector<int>(1,-1));
 
 
     char choice;                                // initialize the choice (user input)

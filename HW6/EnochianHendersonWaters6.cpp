@@ -95,6 +95,8 @@ int main () {
         bucket2[b] = NULL;
     }
 
+    vector<int><vector<int>> bucket3[N];
+
 
     char choice;                                // initialize the choice (user input)
     cout << "Assignment #6" << endl << endl;
@@ -156,6 +158,7 @@ int main () {
                 //bucket2[h1]->push_back(keyList[j]);
 
                 //-----------------------------STILL NEEDS TO BE CODED-----------------------------//
+
 
             }
             else{

@@ -177,7 +177,7 @@ int main () {
     }else{
         for(int z = 0; z < N; z++){
             if (bucket3[z].size() == 0){
-                cout << " _, ";
+                cout << " _; ";
             }else{
                 for(int index = 0; index < bucket3[z].size(); index++){
                     cout << bucket3[z][index] << ", ";

@@ -95,7 +95,7 @@ int main () {
         bucket2[b] = NULL;
     }
 
-    vector<vector<int>> bucket3(N, vector<int>(0));
+    vector<vector<int> > bucket3(N, vector<int>(0));
 
     char choice;                                // initialize the choice (user input)
     cout << "Assignment #6" << endl << endl;

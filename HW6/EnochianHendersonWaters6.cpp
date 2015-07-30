@@ -57,7 +57,7 @@ class HashTable{                    // initialize the HashTable class to set up 
             return -1;                                              // return a -1 (to represent empty)
         }
         else{
-            return table[hash]->getValue(); // otherwise we return the value at that location in the hash table
+            return table[hash]->getValue();                         // otherwise we return the value at that location in the hash table
         }
     }
 
@@ -90,12 +90,8 @@ int main () {
     for (int a = 0; a < N; a++){    // fill with -1 to indicate emptiness of bucket (values will be >= 0)
         bucket[a] = -1;             //initialize bucket array
     }
-    vector<int>* bucket2[N];        // initialize an array of pointers to vectors (bucket2) of size N (23)
-    for(int b = 0; b < N; b++){     // make all pointers point to NULL
-        bucket2[b] = NULL;
-    }
 
-    vector<vector<int> > bucket3(N, vector<int>(0));
+    vector<vector<int> > bucket2(N, vector<int>(0));
 
     char choice;                                // initialize the choice (user input)
     cout << "Assignment #6" << endl << endl;
@@ -108,43 +104,34 @@ int main () {
     const int keyListSize = ceil(loadRatio*N);  // since the load ratio is a percentage (load ratio = n/N), if we multiply N by the percentage we will acquire the same value
     int keysNeeded = keyListSize;
     int keyList[keyListSize];                   // initialize a keyList array to store the keys that will be used
-    //for (int i = 0; i < keyListSize; i++) {     // for each entry in keyList, we will assign a random value between 0 and 50
-    //    int value = rand() % 50;
-    //    keyList[i] = value;
-    //}
 
-    // for loop that steps through each element in keyList array and tries to put it in a bucket
-    // if the bucket is already filled with an entry, then we will use 1 of 3 collision-resolution methods
-    // as defined by the user earlier in the code (see lines 101-102)
-
-    while (keysNeeded != 0){
-        int randKey = rand() % 50;
-        bool unique = true;
-        for(int i = 0; i < keyListSize; i++){
+    while (keysNeeded != 0){                    // while loop that checks to see if keysNeeded (list size) = 0 (empty)
+        int randKey = rand() % 50;              // generates a randomKey
+        bool unique = true;                     // automatically sets unique boolean to true
+        for(int i = 0; i < keyListSize; i++){   // checks to make sure the key really is unique
             if(keyList[i] == randKey){
-                unique = false;
+                unique = false;                 // if it's not unique, we set the unique variable to false and exit the for loop
                 break;
             }
         }
-        if (unique){
-            keyList[keysNeeded-1] = randKey;
-            keysNeeded--;
-            int h1 = randKey % N;                           // creates the hash value (h(k))
-            cout << "This should go in entry: " << h1 << endl; // prints hash value to user (testing)
-            if((choice != 'c' && bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){ // if the bucket is <0 (-1), it is empty and we can put something there
-                bucket[h1] = randKey;
-                //bucket2[h1]->push_back(keyList[j]);
+        if (unique){                                            // if the key is unique
+            keyList[keysNeeded-1] = randKey;                    // put the key at the end
+            keysNeeded--;                                       // decrement keysNeeded
+            int h1 = randKey % N;                               // creates the hash value (h(k))
+            cout << "This should go in entry: " << h1 << endl;  // prints hash value to user (testing)
+            if((choice != 'c' && bucket[h1] < 0)){              // if the bucket is <0 (-1) and as long as the separate chaining isn't chosen, it is empty and we can put something there
+                bucket[h1] = randKey;                           // put that key in the bucket at the h1'th location
             }
-            else{                                           // otherwise we have to do collision resolution (dependent on user's choice)
-                if (choice == 'a'){                         //double hashing
-                    int q = 19;                             // set up an arbitrary (prime) q
-                    int h2 = q - (randKey % q);          // calculate h2 (h')
-                    for (int n = 0; n < N; n++){            // this represents the j = 0, 1, 2, . . . listed in the book under double hashing
-                        int location = (h1 + (h2*n)) % N;   // calculates a new location
-                        if (bucket[location] < 0){          // if it's empty, put the key in that location
+            else{                                               // otherwise we have to do collision resolution (dependent on user's choice)
+                if (choice == 'a'){                             //double hashing
+                    int q = 19;                                 // set up an arbitrary (prime) q
+                    int h2 = q - (randKey % q);                 // calculate h2 (h')
+                    for (int n = 0; n < N; n++){                // this represents the j = 0, 1, 2, . . . listed in the book under double hashing
+                        int location = (h1 + (h2*n)) % N;       // calculates a new location
+                        if (bucket[location] < 0){              // if it's empty, put the key in that location
                             bucket[location] = randKey;
-                            break;                          // leave for loop
-                        }                                   // iterates through for loop until an empty bucket is found
+                            break;                              // leave while loop
+                        }                                       // iterates through for loop until an empty bucket is found
                     }
                 }
                 else if (choice == 'b'){                            // quadratic probing
@@ -156,8 +143,8 @@ int main () {
                         }
                     }
                 }
-                else if (choice == 'c'){                    //chaining
-                    bucket3[h1].push_back(randKey);      //put original key into corresponding hashvalue vector
+                else if (choice == 'c'){                        //chaining
+                    bucket2[h1].push_back(randKey);             //put original key into corresponding hashvalue vector
                 }
                 else{
                     cout << "Program ended." << endl;
@@ -191,39 +178,40 @@ int main () {
         }
     }else{
         for(int z = 0; z < N; z++){
-            if (bucket3[z].size() == 0){
+            if (bucket2[z].size() == 0){
                 cout << " _; ";
             }else{
-                for(int index = 0; index < bucket3[z].size(); index++){
-                    cout << bucket3[z][index] << ", ";
+                for(int index = 0; index < bucket2[z].size(); index++){
+                    cout << bucket2[z][index] << ", ";
                 }
                 cout << "; ";
             }
         }
     }
     cout << "]" << endl;
+    // End of print segment
 
-    cout << "Please enter a key to check if it is currently in the table: "; //Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
-    int testKey = -1;
-    cin >> testKey;
-    int h1 = testKey % N;                           // creates the hash value (h(k))
-    bool uniqueTest = true;
-    if(choice != 'c'){
-        for (int i = 0; i < N; i++){
-            if(bucket[h1] > -1){
+    cout << "Please enter a key to check if it is currently in the table: ";    // Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
+    int testKey = -1;                                                           // Initialize testKey to store user's response
+    cin >> testKey;                                                             // Store user's response
+    int h1 = testKey % N;                                                       // creates the hash value (h(k))
+    bool uniqueTest = true;                                                     // set up a uniqueTest variable and initialize to true
+    if(choice != 'c'){                                                          // if user chooses a or b (NOT c), then we look in each bucket and see if the test is true
+        for (int i = 0; i < N; i++){                                            // runs through the bucket and checks if the value at bucket[h1] is greater than -1 (has something in it)
+            if(bucket[h1] > -1){                                                // if so, the test is false
                 uniqueTest = false;
             }
         }
     }else{
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < bucket3[i].size(); j++){
-                if(bucket3[i][j] == testKey){
-                    uniqueTest = true;
+        for(int i = 0; i < N; i++){                                             // if user chose c, we step through 2 for loops to look at each element and look for the testKey value in all lists
+            for(int j = 0; j < bucket2[i].size(); j++){
+                if(bucket2[i][j] == testKey){
+                    uniqueTest = true;                                          // if the testKey is found, uniqueTest is true
                 }
             }
         }
     }
-    if (uniqueTest){
+    if (uniqueTest){                                                            // if the uniqueTest is true that value is not in the table, if false it is in the table already
         cout << "It's NOT in the table." << endl;
     }else{
         cout << "It's in the table." << endl;

@@ -128,7 +128,7 @@ int main () {
     for(int j = 0; j < keyListSize; j++){
         int h1 = keyList[j] % N;                           // creates the hash value (h(k))
         cout << "This should go in entry: " << h1 << endl; // prints hash value to user (testing)
-        if((bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){ // if the bucket is <0 (-1), it is empty and we can put something there
+        if((choice != 'c' && bucket[h1] < 0) /*&& (bucket2[h1] == NULL)*/){ // if the bucket is <0 (-1), it is empty and we can put something there
             bucket[h1] = keyList[j];
             //bucket2[h1]->push_back(keyList[j]);
         }

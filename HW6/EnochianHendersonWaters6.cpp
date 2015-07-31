@@ -104,6 +104,7 @@ int main () {
     const int keyListSize = ceil(loadRatio*N);  // since the load ratio is a percentage (load ratio = n/N), if we multiply N by the percentage we will acquire the same value
     int keysNeeded = keyListSize;
     int keyList[keyListSize];                   // initialize a keyList array to store the keys that will be used
+    int totalComparisons = 0;                   // inititalized counter for comparisons
 
     while (keysNeeded != 0){                    // while loop that checks to see if keysNeeded (list size) = 0 (empty)
         int randKey = rand() % 50;              // generates a randomKey
@@ -121,6 +122,7 @@ int main () {
             cout << "This should go in entry: " << h1 << endl;  // prints hash value to user (testing)
             if((choice != 'c' && bucket[h1] < 0)){              // if the bucket is <0 (-1) and as long as the separate chaining isn't chosen, it is empty and we can put something there
                 bucket[h1] = randKey;                           // put that key in the bucket at the h1'th location
+                totalComparisons += 1;                          // increments comparison counter because a comparison was made
             }
             else{                                               // otherwise we have to do collision resolution (dependent on user's choice)
                 if (choice == 'a'){                             //double hashing
@@ -130,8 +132,10 @@ int main () {
                         int location = (h1 + (h2*n)) % N;       // calculates a new location
                         if (bucket[location] < 0){              // if it's empty, put the key in that location
                             bucket[location] = randKey;
-                            break;                              // leave while loop
+                            totalComparisons += 1;              // increment the number of comparisons (once it's finally inserted - final comparison)
+                            break;                              // leave for loop
                         }                                       // iterates through for loop until an empty bucket is found
+                        totalComparisons += 1;                  // increment comparisons outside if statement in case that location is still invalid (still counts as comparison)
                     }
                 }
                 else if (choice == 'b'){                            // quadratic probing
@@ -139,12 +143,15 @@ int main () {
                         int location = (h1 + (int)pow(x,2)) % N;    // generate a new location to check (using the formula provided in textbook -> (h1 + x^2)%N)
                         if (bucket[location] < 0){                  // if it's empty, add it to that bucket and leave for loop - otherwise, loop to next value for x
                             bucket[location] = randKey;
+                            totalComparisons += 1;                  // increment number of comparisons
                             break;
                         }
+                        totalComparisons += 1;                      // increment number of comparisons if the code doesn't step through the if statement
                     }
                 }
-                else if (choice == 'c'){                        //chaining
-                    bucket2[h1].push_back(randKey);             //put original key into corresponding hashvalue vector
+                else if (choice == 'c'){                        // chaining
+                    bucket2[h1].push_back(randKey);             // put original key into corresponding hashvalue vector
+                    totalComparisons += 1;                      // increment number of comparisons
                 }
                 else{
                     cout << "Program ended." << endl;
@@ -190,6 +197,9 @@ int main () {
     }
     cout << "]" << endl;
     // End of print segment
+
+    // Print number of comparisons //
+    cout << "The total number of comparisons that had to be made for this hash table is: " << totalComparisons << endl;
 
     cout << "Please enter a key to check if it is currently in the table: ";    // Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
     int testKey = -1;                                                           // Initialize testKey to store user's response

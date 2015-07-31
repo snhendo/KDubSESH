@@ -149,7 +149,7 @@ int main () {
     cin >> testKey;                                                             // Store user's response
     int h1 = testKey % N;                                                       // creates the hash value (h(k))
     bool uniqueTest = true;                                                     // set up a uniqueTest variable and initialize to true
-    if(choice != 'c'){                                                          // if user chooses a or b (NOT c), then we look in each bucket and see if the test is true
+    /*if(choice != 'c'){                                                          // if user chooses a or b (NOT c), then we look in each bucket and see if the test is true
         for (int i = 0; i < N; i++){                                            // runs through the bucket and checks if the value at bucket[h1] is greater than -1 (has something in it)
             if(bucket[h1] > -1){                                                // if so, the test is false
                 uniqueTest = false;
@@ -164,11 +164,17 @@ int main () {
             }
         }
     }
+
+    float AvgComp = (float)totalComparisons/(float)keyListSize;
+    cout << endl << "Average Comparisons: " << AvgComp << endl;
+
+
     if (uniqueTest){                                                            // if the uniqueTest is true that value is not in the table, if false it is in the table already
         cout << "It's NOT in the table." << endl;
     }else{
         cout << "It's in the table." << endl;
-    }
+    }*/
+
 
     return 0;
     //end of main function

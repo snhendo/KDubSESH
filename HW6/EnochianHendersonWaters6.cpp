@@ -20,7 +20,7 @@ Credit: Referred to Dr. Talaga's examples from CS2, consulted the web for variou
 using namespace std;
 
 //DECLARE TABLE SIZE
-const int N = 811;
+const int N = 1009;
 
 int main () {
     srand(time(0));                 //will move whenever we incorporate the for loop
@@ -44,8 +44,13 @@ int main () {
     int keyList[keyListSize];                   // initialize a keyList array to store the keys that will be used
     int totalComparisons = 0;                   // inititalized counter for comparisons
 
+<<<<<<< Updated upstream
     while (keysNeeded != keyListSize){          // while loop that checks to see if that the keys are all unique
         int randKey = rand() % 1000;            // generates a randomKey
+=======
+    while (keysNeeded != keyListSize){                    // while loop that checks to see if keysNeeded (list size) = 0 (empty)
+        int randKey = rand() % 1500;              // generates a randomKey
+>>>>>>> Stashed changes
         bool unique = true;                     // automatically sets unique boolean to true
         for(int i = 0; i < keyListSize; i++){   // checks to make sure the key really is unique
             if(keyList[i] == randKey){
@@ -144,8 +149,8 @@ int main () {
     // Print number of comparisons and average comparisons//
     cout << "The total number of comparisons that had to be made for this hash table is: " << totalComparisons << endl;
     float AvgComp = (float)totalComparisons/(float)keyListSize;
-    cout << "Average Comparisons: " << AvgComp << endl;
-    /*cout << "Please enter a key to check if it is currently in the table: ";    // Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
+    cout << endl << "Average Comparisons: " << AvgComp << endl;
+    cout << "Please enter a key to check if it is currently in the table: ";    // Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
     int testKey = -1;                                                           // Initialize testKey to store user's response
     cin >> testKey;                                                             // Store user's response
     int h1 = testKey % N;                                                       // creates the hash value (h(k))
@@ -171,7 +176,7 @@ int main () {
         cout << "It's NOT in the table." << endl;
     }else{
         cout << "It's in the table." << endl;
-    }*/
+    }
 
 
     return 0;

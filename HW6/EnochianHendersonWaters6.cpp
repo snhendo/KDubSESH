@@ -20,7 +20,7 @@ Credit: Referred to Dr. Talaga's examples from CS2, consulted the web for variou
 using namespace std;
 
 //DECLARE TABLE SIZE
-const int N = 23;
+const int N = 811;
 
 int main () {
     srand(time(0));                 //will move whenever we incorporate the for loop
@@ -40,12 +40,12 @@ int main () {
     float loadRatio = 0.0;                      // initialize loadRatio
     cin >> loadRatio;                           // store user's response to the cout statement here
     const int keyListSize = ceil(loadRatio*N);  // since the load ratio is a percentage (load ratio = n/N), if we multiply N by the percentage we will acquire the same value
-    int keysNeeded = keyListSize;
+    int keysNeeded = 0;
     int keyList[keyListSize];                   // initialize a keyList array to store the keys that will be used
     int totalComparisons = 0;                   // inititalized counter for comparisons
 
-    while (keysNeeded != 0){                    // while loop that checks to see if keysNeeded (list size) = 0 (empty)
-        int randKey = rand() % 50;              // generates a randomKey
+    while (keysNeeded != keyListSize){                    // while loop that checks to see if keysNeeded (list size) = 0 (empty)
+        int randKey = rand() % 1000;              // generates a randomKey
         bool unique = true;                     // automatically sets unique boolean to true
         for(int i = 0; i < keyListSize; i++){   // checks to make sure the key really is unique
             if(keyList[i] == randKey){
@@ -54,10 +54,10 @@ int main () {
             }
         }
         if (unique){                                            // if the key is unique
-            keyList[keysNeeded-1] = randKey;                    // put the key at the end
-            keysNeeded--;                                       // decrement keysNeeded
+            keyList[keysNeeded] = randKey;                    // put the key at the end
+            keysNeeded++;                                       // decrement keysNeeded
             int h1 = randKey % N;                               // creates the hash value (h(k))
-            cout << "This should go in entry: " << h1 << endl;  // prints hash value to user (testing)
+            //cout << "This should go in entry: " << h1 << endl;  // prints hash value to user (testing)
             if((choice != 'c' && bucket[h1] < 0)){              // if the bucket is <0 (-1) and as long as the separate chaining isn't chosen, it is empty and we can put something there
                 bucket[h1] = randKey;                           // put that key in the bucket at the h1'th location
                 totalComparisons += 1;                          // increments comparison counter because a comparison was made
@@ -143,13 +143,14 @@ int main () {
 
     // Print number of comparisons //
     cout << "The total number of comparisons that had to be made for this hash table is: " << totalComparisons << endl;
-
-    cout << "Please enter a key to check if it is currently in the table: ";    // Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
+    float AvgComp = (float)totalComparisons/(float)keyListSize;
+    cout << "Average Comparisons: " << AvgComp << endl;
+    /*cout << "Please enter a key to check if it is currently in the table: ";    // Ask user for key to be added to table, if key is present, collision prevention will occur and it will be placed accordingly
     int testKey = -1;                                                           // Initialize testKey to store user's response
     cin >> testKey;                                                             // Store user's response
     int h1 = testKey % N;                                                       // creates the hash value (h(k))
     bool uniqueTest = true;                                                     // set up a uniqueTest variable and initialize to true
-    /*if(choice != 'c'){                                                          // if user chooses a or b (NOT c), then we look in each bucket and see if the test is true
+    if(choice != 'c'){                                                          // if user chooses a or b (NOT c), then we look in each bucket and see if the test is true
         for (int i = 0; i < N; i++){                                            // runs through the bucket and checks if the value at bucket[h1] is greater than -1 (has something in it)
             if(bucket[h1] > -1){                                                // if so, the test is false
                 uniqueTest = false;
@@ -164,9 +165,6 @@ int main () {
             }
         }
     }
-
-    float AvgComp = (float)totalComparisons/(float)keyListSize;
-    cout << endl << "Average Comparisons: " << AvgComp << endl;
 
 
     if (uniqueTest){                                                            // if the uniqueTest is true that value is not in the table, if false it is in the table already

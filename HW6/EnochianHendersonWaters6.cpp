@@ -22,68 +22,6 @@ using namespace std;
 //DECLARE TABLE SIZE
 const int N = 23;
 
-class HashEntry{                        // initialize the hashEntry class to have the key/value properties
-    private:
-        int key;
-        int value;
-    public:
-        HashEntry(int key, int value){  // constructor to intialize key and value
-            this->key = key;
-            this->value = value;
-        }
-
-        int getKey(){ return key; }     // sets up getKey
-        int getValue(){ return value; } // sets up getValue
-};
-
-class HashTable{                    // initialize the HashTable class to set up the bucket array
-    private:
-    HashEntry** table;              // declare the table
-
-    public:
-    HashTable(){                    // constructs the table
-        table = new HashEntry*[N];  // create a new table of size N
-        for(int i = 0; i < N; i++){ // fill table with pointers to NULL
-            table[i] = NULL;
-        }
-    }
-
-    int get(int key){                                               // definition of get (for the hash table)
-        int hash = (key %  N);                                      // this is our h(k) -> as described in the textbook
-        while(table[hash] != NULL && table[hash]->getKey() != key){ // as long as there are entries (not pointing to NULL) and the value at that location in the hash table is not equal to the key value
-            hash = (hash + 1) % N;                                  // change h(k) to equal (h(k) + 1) % N (23)
-        }
-        if(table[hash] == NULL){                                    // if the pointer points to NULL
-            return -1;                                              // return a -1 (to represent empty)
-        }
-        else{
-            return table[hash]->getValue();                         // otherwise we return the value at that location in the hash table
-        }
-    }
-
-    void put(int key, int value){                                   // definition of the put function
-        int hash = (key % N);                                       // set up our h(k)
-        while(table[hash] != NULL && table[hash]->getKey() != key){ // make sure we have a valid hash location
-            hash = (hash + 1) % N;
-        }
-        if (table[hash] != NULL){                                   // if that location points to NULL (is empty)
-            delete table[hash];                                     // delete the pointer? (Is this right?)
-        }
-        table[hash] = new HashEntry(key, value);                    // otherwise we create a new entry in the table and fill it with (k,v)
-    }
-
-    ~HashTable(){                                                   // destructor
-        for(int i = 0; i < N; i++){                                 // deletes pointers
-            if(table[i] != NULL){
-                delete table[i];
-            }
-        }
-        delete[] table;                                             // makes sure everything is deleted
-    }
-};
-
-
-
 int main () {
     srand(time(0));                 //will move whenever we incorporate the for loop
     int bucket[N];                  // declare bucket array of size N (23)
@@ -173,8 +111,8 @@ int main () {
     // End of testing segment //
 
     // Prints out the bucket array for testing purposes to make sure our collision resolution methods work
-    cout << "[";
     if (choice != 'c'){
+        cout << "[";
         for(int z = 0; z < N; z++){
             if (bucket[z] == -1){
                 cout << " _, ";
@@ -183,19 +121,24 @@ int main () {
             cout << bucket[z] << ", ";
             }
         }
-    }else{
+        cout << "]" << endl;
+    }
+    else{
+        cout << endl;
         for(int z = 0; z < N; z++){
+            cout << "Bucket " << z << ": ";
             if (bucket2[z].size() == 0){
-                cout << " _; ";
-            }else{
+                cout << endl;
+            }
+            else{
                 for(int index = 0; index < bucket2[z].size(); index++){
                     cout << bucket2[z][index] << ", ";
                 }
-                cout << "; ";
+                cout << endl;
             }
         }
     }
-    cout << "]" << endl;
+
     // End of print segment
 
     // Print number of comparisons //
